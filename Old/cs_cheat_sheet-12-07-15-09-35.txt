@@ -1,5 +1,5 @@
 ChrisScript cheat sheet
-** updated 12-07-15-09-35
+** updated 12-07-15-08-40
 
 #			-->		windows key
 ^			-->		control key
