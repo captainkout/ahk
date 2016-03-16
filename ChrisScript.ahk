@@ -4,7 +4,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 !h::		;-->		open cheat sheet
-	run notepad++.exe  cs_cheat_sheet.txt
+	run notepad.exe  cs_cheat_sheet.txt
 Return
 !r::		;-->		refresh script
 	WinGetTitle, Class, A
@@ -22,24 +22,24 @@ Return
 	run, cmd.exe 
 Return
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
-	run, C:\Program Files\Google\Chrome\Application\chrome.exe
+	run, C:\Program Files (x86)\Mozilla Firefox\firefox.exe
 Return
 !n::		;-->		note plus plus{less snark}
-	run, notepad++.exe 
+	run, notepad.exe 
 Return
-!g::		;-->		gentax ttd should be in the same place for everyone
-	run, C:\GenTax\TTD\GenTax\gtgen.exe 
+!g::		;-->		gentax FDD should be in the same place for everyone
+	run, C:\Gentax\PRD\Gentax\gtGen.exe
 Return
-!+g::		;-->		trini gentax nav screen -->if chrome is unresponsive, make sure to run script as admin
-	run, "https://ttgnpfcr001.ird.gov.tt/navigate/Q8QXhFS7/#1" 
-Return
-!f::		;-->		trini site fcr
-	run, C:\GenTax\TT FCR\gtGen.exe "AutoStart_FCR,http://TTGNPFCR001:8601/FCR/Repository/gentax.svc" 
+;!+g::		;-->		we don't have this yet
+;	run, "https://ttgnpfcr001.ird.gov.tt/navigate/Q8QXhFS7/#1" 
+;Return
+!f::		;-->		PR site fcr
+	run, C:\Gentax\FCR\Gentax\FCR Local Auto Start
 Return
 !+f::		;-->		denver FCR
 	run, "C:\GenTax\Fast Environments\Fast\gtGen.exe" AutoStart_FCR WEB FCR,https://Environments.GenTax.com/FCR/Repository/GenTax.svc
 Return
-^+c::		;-->		add to clipboard list(max 5) because cycling through anything longer would require forwards and backwards that i didn't want to bother with
+^+c::		;-->		add to clipboard
 	global clip_list
 	global clip_index
 	if clip_list.MaxIndex()=""
@@ -354,6 +354,3 @@ Return
 		}
 	}
 Return
-
-
-

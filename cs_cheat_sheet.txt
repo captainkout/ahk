@@ -1,5 +1,5 @@
 ChrisScript cheat sheet
-** updated 12-09-15-14-30
+** updated 03-16-16-16-34
 
 #			-->		windows key
 ^			-->		control key
@@ -14,11 +14,11 @@ The "::" doesn't mean anything. End of command.
 #c::		;-->		command prompt {remove snark}
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
 !n::		;-->		note plus plus{less snark}
-!g::		;-->		gentax ttd should be in the same place for everyone
-!+g::		;-->		trini gentax nav screen -->if chrome is unresponsive, make sure to run script as admin
-!f::		;-->		trini site fcr
+!g::		;-->		gentax FDD should be in the same place for everyone
+;!+g::		;-->		we don't have this yet
+!f::		;-->		PR site fcr
 !+f::		;-->		denver FCR
-^+c::		;-->		add to clipboard list(max 5) because cycling through anything longer would require forwards and backwards that i didn't want to bother with
+^+c::		;-->		add to clipboard
 ^+v::		;-->		paste current clipboard
 ^+space::	;-->		move to next clipboard, then paste
 ^+x::		;-->		Wipe out all clipboards and start index over
