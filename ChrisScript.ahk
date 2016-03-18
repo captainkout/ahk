@@ -18,14 +18,17 @@ Return
 !c::		;-->		c drive
 	run, C:\
 Return
+#z::		;-->		z drive - project share
+	run, Z:\
+Return
 #c::		;-->		command prompt {remove snark}
 	run, cmd.exe 
 Return
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
-	run, C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+	run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 Return
 !n::		;-->		note plus plus{less snark}
-	run, notepad.exe 
+	run, C:\Program Files (x86)\Notepad++\notepad++.exe
 Return
 !g::		;-->		gentax FDD should be in the same place for everyone
 	run, C:\Gentax\PRD\Gentax\gtGen.exe
@@ -34,7 +37,7 @@ Return
 ;	run, "https://ttgnpfcr001.ird.gov.tt/navigate/Q8QXhFS7/#1" 
 ;Return
 !f::		;-->		PR site fcr
-	run, C:\Gentax\FCR\Gentax\FCR Local Auto Start
+	run, C:\GenTax\FCR\GenTax\gtGen.exe AutoStart_FCR, net.tcp://hacgtxappfcr01:8001/FCR/Repository/Gentax.svc
 Return
 !+f::		;-->		denver FCR
 	run, "C:\GenTax\Fast Environments\Fast\gtGen.exe" AutoStart_FCR WEB FCR,https://Environments.GenTax.com/FCR/Repository/GenTax.svc
