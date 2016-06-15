@@ -1,0 +1,51 @@
+ChrisScript cheat sheet
+** updated 04-26-16-16-48
+
+#			-->		windows key
+^			-->		control key
++			-->		shift key
+!			-->		alt key
+The "::" doesn't mean anything. End of command.
+-------------------------------Current Version--------------------------------
+
+!h::		;-->		open cheat sheet
+!r::		;-->		refresh script
+!c::		;-->		c drive
+#z::		;-->		z drive - project share
+#c::		;-->		command prompt {remove snark}
+!+c::		;-->		open new chrome, works even if chrome is unresponsive
+!n::		;-->		note plus plus{less snark}
+!g::		;-->		gentax FDD should be in the same place for everyone
+;!+g::		;-->		we don't have this yet
+!f::		;-->		PR site fcr
+!+f::		;-->		denver FCR
+^+c::		;-->		add to clipboard
+^+v::		;-->		paste current clipboard
+^+space::	;-->		move to next clipboard, then paste
+^+x::		;-->		Wipe out all clipboards and start index over
+!k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
+!+k::		;-->		column of strings pasted as comma delimited list, put your cursor where you want it
+!a::		;-->		archive a timestamped version of your script and cheat sheet
+!b::		;-->		testing stuff, hehehe
+;-----------Gentax Doc Format section--------------::;-->	Common doc field formats
+:*:!ah::	;-->	autoheight
+:*:!fb::	;-->	font-bold
+:*:!cb::	;-->	caption-bold
+:*:!ft::	;-->	ftml
+:*:!tt::	;--> 	tooltip yourfieldname with "help" on the end
+;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with winQ
+!q::		;-->		Turn on/off sql specific stuff, still should only work in windows with "sql" or "script" in name, AHK only supports global arrays !?!?!
+!+l::		;-->		write "like '%%'" and put cursor in middle
+!+d::		;-->		write "'12/31/9999'" and highlight month for quick edit
+!s::		;-->		write "select * from "
+!+s::		;-->		write "select top 100 * from "
+!p::		;-->		Declare all parameters from highlighted query
+!z::		;-->		zaudit query because the blame tool is too blamin' slow
+!+z::		;-->		information_schema.columns query
+:*B0:'::	;-->		close single quote only in sql or gentax sqleditor
+:*:,::		;-->		return after commas
+:*B0:from::	;-->		return after from
+:*B0:where::	;-->		return after where
+:*B0:and::	;-->		return after and
+:*B0:group by::	;-->		return after group by
+:*B0:order by::	;-->		return after order by

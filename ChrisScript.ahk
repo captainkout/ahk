@@ -24,6 +24,18 @@ Return
 #c::		;-->		command prompt {remove snark}
 	run, cmd.exe 
 Return
+
+
+!d::		;-->		gentaxDocs
+	run, C:\Users\chris.koutras\Desktop\gentaxDocs
+Return
+#d::		;-->		prd gentax folder
+	run, C:\GenTax\PRD\Gentax
+Return
+!+h::		;-->		hotkeyfoler
+	run, C:\git\ahk
+Return
+
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
 	run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 Return
@@ -33,36 +45,34 @@ Return
 !g::		;-->		gentax FDD should be in the same place for everyone
 	run, C:\Gentax\PRD\Gentax\gtGen.exe
 Return
-;!+g::		;-->		we don't have this yet
-;	run, "https://ttgnpfcr001.ird.gov.tt/navigate/Q8QXhFS7/#1" 
-;Return
+!+g::		;-->		we don't have this yet
+	run, "https://fastcentralrepository.hacienda.gobierno.pr/links/" 
+return
 !f::		;-->		PR site fcr
 	run, C:\GenTax\FCR\GenTax\gtGen.exe AutoStart_FCR, net.tcp://hacgtxappfcr01:8001/FCR/Repository/Gentax.svc
 Return
 !+f::		;-->		denver FCR
 	run, "C:\GenTax\Fast Environments\Fast\gtGen.exe" AutoStart_FCR WEB FCR,https://Environments.GenTax.com/FCR/Repository/GenTax.svc
 Return
-^+c::		;-->		add to clipboard
+!e::		;-->		Fast Environments
+	run, "https://environments.gentax.com/links/"
+Return
+!+e::		;-->		Fast Forums
+	run, "https://fastforum.gentax.com/"
+Return
+^+c::		;-->		add to clipboard (removed max index)
 	global clip_list
 	global clip_index
 	if clip_list.MaxIndex()=""
 	{
+		clip_index:= 0
 		clip_list :=[]
 	}
-	if % clip_list.MaxIndex() <20
-	{
-		SendInput,^c
-		sleep, 100
-		clip_index += 1
-		clip_list.Push("" . clipboard . "")
-	}
-	else 
-	{
-		clip_index :=Mod(clip_index,5)+1
-		SendInput,^c
-		sleep, 100
-		clip_list[clip_index] := "" . clipboard . ""
-	}
+	SendInput,^c
+	sleep, 100
+	clip_index :=clip_index + 1
+	clip_list[clip_index] := "" . clipboard . ""
+
 Return
 ^+v::		;-->		paste current clipboard
 	global clip_list
@@ -77,9 +87,31 @@ Return
 	clipboard := clip_list[clip_index]
 	de_length := StrLen(clipboard)
 	SendInput,^v
-	Sleep, 45
-	SendInput,{Shift Down}{Left %de_length%}{Shift Up}
+	if de_lenth < 100 ;dont highlight for large strings
+	{
+		Sleep, 45
+		SendInput,{Shift Down}{Left %de_length%}{Shift Up}
+	}
 Return
+^!space::	;-->		move to to previous clipboard, then paste
+	global clip_list
+	global clip_index
+	clip_index :=Mod(clip_index-1, clip_list.MaxIndex())
+	if clip_index <1 ;weird definition of modulus
+	{
+		clip_index := clip_list.MaxIndex()
+	}
+	clipboard := clip_list[clip_index]
+	de_length := StrLen(clipboard)
+	SendInput,^v
+	Sleep, 45
+	if de_lenth < 100 ;dont highlight for large strings
+	{
+		Sleep, 45
+		SendInput,{Shift Down}{Left %de_length%}{Shift Up}
+	}
+Return
+
 ^+x::		;-->		Wipe out all clipboards and start index over
 	global clip_list
 	global clip_index
@@ -134,12 +166,48 @@ Return
 		FileAppend, `n%value1%, cs_cheat_sheet.txt
 	MsgBox, Archive action complete
 Return
-!b::		;-->		testing stuff, hehehe
-	newstr := "line one `rlinetwo `rlinethree"
-	clipboard := newstr
+^+b::		;-->		move to next clipboard, then paste
+	global clip_list
+	global clip_index
+	clip_index :=Mod(clip_index, clip_list.MaxIndex())-1
+	MsgBox ,262144, %something%
+	clipboard := clip_list[clip_index]
+	MsgBox ,262144, %clipboard%
+	de_length := StrLen(clipboard)
+	SendInput,^v
 	Sleep, 45
-	SendInput, ^v
+	SendInput,{Shift Down}{Left %de_length%}{Shift Up}
 Return
+
+;-----------Gentax Doc Format section--------------::;-->	Common doc field formats
+:*:!ah::	;-->		autoheight
+	SendInput,[autoheight=true]
+Return
+:*:!fb::	;-->		font-bold
+	SendInput,[fontbold=true]
+Return
+:*:!cb::	;-->		caption-bold
+	SendInput,[captionbold=true]
+Return
+:*:!ft::	;-->		ftml
+	SendInput,[ftml=true]
+Return
+:*:!tt::	;--> 		showtip yourfieldname with "help" on the end
+	SendInput,[ShowTip=
+	SendInput,^v
+	Sleep, 45
+	SendInput,Help]
+return
+:*:!bt::	;-->		button
+	SendInput,[button=true]
+Return
+:*:!vl::	;-->		value label
+	SendInput,[ValueLabel=true]
+Return
+:*:!bb::	;-->		value label
+	SendInput,[b][/b]{Left 4}
+Return
+	
 
 ;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with winQ
 !q::		;-->		Turn on/off sql specific stuff, still should only work in windows with "sql" or "script" in name, AHK only supports global arrays !?!?!
@@ -156,6 +224,43 @@ Return
 			MsgBox, SqlStrings is now OFF
 		}
 Return
+:*:!da::	;-->		use prd_gtapp
+	SendInput,use PRD_GTAPP{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!dw::	;-->		use prd_gtweb
+	SendInput,use PRD_GTWEB{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!dr::	;-->		use prd_gtref
+	SendInput,use PRD_GTREF{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!dq::	;-->		use prd_gtwrq
+	SendInput,use PRD_GTWRQ{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!ds::	;-->		use prd_gtsys
+	SendInput,use PRD_GTSYS{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!sa::	;-->		use prs_gtapp
+	SendInput,use PRS_GTAPP{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!sw::	;-->		use prs_gtweb
+	SendInput,use PRS_GTWEB{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!sr::	;-->		use prs_gtref
+	SendInput,use PRS_GTREF{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!sq::	;-->		use prs_gtwrq
+	SendInput,use PRS_GTWRQ{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!ss::	;-->		use prs_gtsys
+	SendInput,use PRS_GTSYS{Shift down}{Home}{shift up}{f5}{delete}
+Return
+:*:!fpub::	;-->		force a re-publish
+	clipboard :="use PRD_GTWEB`rdeclare @plngCustomerKey as integer = (select top 1 flngcustomerkey from TBLWebAccount)`rdelete TBLWebPublishData where flngCustomerKey = @plngCustomerKey`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey`ruse PRD_GTAPP`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey"
+	SendInput,^v
+	Sleep,45
+	SendInput,{shift down}{home}{up 5}{shift up}
+Return
+
 !+l::		;-->		write "like '%%'" and put cursor in middle
 	SendInput,like '`%`%'{left}{left}
 Return
@@ -241,14 +346,14 @@ Return
 	Sleep, 45
 	SendInput,^v
 	Sleep, 45
-	SendInput,{Up}{Right 2}
+	SendInput,{Up}{Up}{Right 1}
 Return
 !+z::		;-->		information_schema.columns query
-	clipboard:="Select TABLE_NAME,COLUMN_NAME,COLUMN_DEFAULT,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH `rFrom  INFORMATION_SCHEMA.COLUMNS `rwhere Column_name like '`%`%' `r--and table_name like '`%`%'"
+	clipboard:="Select TABLE_NAME,COLUMN_NAME,COLUMN_DEFAULT,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH `rFrom  INFORMATION_SCHEMA.COLUMNS `rwhere TABLE_NAME like '`%`%' `r--and Column_name like '`%`%'`rorder by Table_Name asc"
 	Sleep, 45
 	SendInput,^v
 	Sleep, 45
-	SendInput,{Up}{Left 1}
+	SendInput,{Up}{Up}{Right 1}
 Return
 :*B0:'::	;-->		close single quote only in sql or gentax sqleditor
 	global SqlStrings
