@@ -24,7 +24,12 @@ Return
 #c::		;-->		command prompt {remove snark}
 	run, cmd.exe 
 Return
-
+#+b::		;-->		testing string concat
+	str := "one" 
+	+ " two"
+	str = %str% three 
+	MsgBox,%str% 
+Return
 
 !d::		;-->		gentaxDocs
 	run, C:\Users\chris.koutras\Desktop\gentaxDocs
@@ -32,6 +37,12 @@ Return
 #d::		;-->		prd gentax folder
 	run, C:\GenTax\PRD\Gentax
 Return
+^+d::		;-->		downloads
+	run, C:\Users\chris.koutras\Downloads
+Return		
+^!d::		;-->		downloads
+	run, C:\Users\chris.koutras\Desktop
+Return	
 !+h::		;-->		hotkeyfoler
 	run, C:\git\ahk
 Return
@@ -131,7 +142,7 @@ Return
 	SendInput,`'
 Return
 !a::		;-->		archive a timestamped version of your script and cheat sheet
-	FormatTime, CurrentDateTime,, MM-dd-yy-HH-mm
+	FormatTime, CurrentDateTime,, MM-dd-yy_HH-mm
 	Script_com := []
 	Copy_com :=[]
 	script_file :="" . A_ScriptDir . "\Old\ChrisScript-" . CurrentDateTime . ".ahk"
@@ -143,22 +154,41 @@ Return
 	;move the old cheat sheet and timestamp it
 	FileMove, cs_cheat_sheet.txt, %cheat_file%
 	
-	;parse through the ChrisScript for commands
+	;parse through the ChrisScript for commands	
 	Loop, Read, ChrisScript.ahk	
 	{
 		Copy_com.Push(A_LoopReadLine)
 		if(InStr(A_LoopReadLine,"::")>0 and InStr(A_LoopReadLine,";-->")>0 and InStr(A_LoopReadLine,"loopreadlin")<1)
 		{
-			Script_com.Push(A_LoopReadLine)
+			;check if its a section headder
+			if Instr(A_LoopReadLine,";----")>0
+			{
+				Script_com.Push("`n`n")
+				Script_com.Push(A_LoopReadLine)
+				Script_com.Push("`n")
+			}
+			else
+			{
+				Script_com.Push(A_LoopReadLine)
+			}
 		}
 	}
 	for key,value in Copy_com
 		FileAppend, `n%value%,%script_file%
 	
 	;write the new cheat sheet header
+	dt = CurrentDateTime
+	header :="ChrisScript cheat sheet`n"
+	+ "** updated " %dt% "`n`n"
+	+ "#			-->		windows key`n"
+	+ "^			-->		control key`n"
+	+ "+			-->		shift key`n"
+	+ "!			-->		alt key`n`n"
+	+ "The :: doesn't mean anything. End of command.`n`n"
+	+ "-------------------------------Current Version--------------------------------`n"
 	FileAppend,	
 	(
-	ChrisScript cheat sheet`n** updated %CurrentDateTime%`n`n#			-->		windows key`n^			-->		control key`n+			-->		shift key`n!			-->		alt key`nThe "::" doesn't mean anything. End of command.`n-------------------------------Current Version--------------------------------`n
+		%header%
 	), cs_cheat_sheet.txt
 	
 	;write the latest cheat sheet commands
@@ -166,17 +196,8 @@ Return
 		FileAppend, `n%value1%, cs_cheat_sheet.txt
 	MsgBox, Archive action complete
 Return
-^+b::		;-->		move to next clipboard, then paste
-	global clip_list
-	global clip_index
-	clip_index :=Mod(clip_index, clip_list.MaxIndex())-1
-	MsgBox ,262144, %something%
-	clipboard := clip_list[clip_index]
-	MsgBox ,262144, %clipboard%
-	de_length := StrLen(clipboard)
-	SendInput,^v
-	Sleep, 45
-	SendInput,{Shift Down}{Left %de_length%}{Shift Up}
+!i::		;-->		open ilspy
+	run, C:\git\ILSpy_Master_2.3.2_Binaries\ILSpy.exe
 Return
 
 ;-----------Gentax Doc Format section--------------::;-->	Common doc field formats
@@ -204,12 +225,14 @@ Return
 :*:!vl::	;-->		value label
 	SendInput,[ValueLabel=true]
 Return
-:*:!bb::	;-->		value label
+:*:!bb::	;-->		ftml bold brackets
 	SendInput,[b][/b]{Left 4}
 Return
-	
+:*:!ii::	;-->		ftml italic brackets
+	SendInput,[i][/i]{Left 4}
+Return	
 
-;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with winQ
+;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with Alt Q 
 !q::		;-->		Turn on/off sql specific stuff, still should only work in windows with "sql" or "script" in name, AHK only supports global arrays !?!?!
 	global SqlStrings
 	if (SqlStrings ="" or SqlStrings[0]="Off")
@@ -224,38 +247,47 @@ Return
 			MsgBox, SqlStrings is now OFF
 		}
 Return
-:*:!da::	;-->		use prd_gtapp
-	SendInput,use PRD_GTAPP{Shift down}{Home}{shift up}{f5}{delete}
+:*:!ga::	;-->		%currentEnv%_GTAPP
+	WinGetTitle, title, A
+		WinGetTitle, getEnv, A
+	start := Instr(getEnv,"_GT")-3
+	env := SubStr(getEnv,start,4)
+	SendInput,use %env%GTAPP{Shift down}{Home}{shift up}{f5}{delete}
 Return
-:*:!dw::	;-->		use prd_gtweb
-	SendInput,use PRD_GTWEB{Shift down}{Home}{shift up}{f5}{delete}
+:*:!gw::	;-->		%currentEnv%_GTWEB
+	WinGetTitle, title, A
+		WinGetTitle, getEnv, A
+	start := Instr(getEnv,"_GT")-3
+	env := SubStr(getEnv,start,4)
+	SendInput,use %env%GTWEB{Shift down}{Home}{shift up}{f5}{delete}
 Return
-:*:!dr::	;-->		use prd_gtref
-	SendInput,use PRD_GTREF{Shift down}{Home}{shift up}{f5}{delete}
+:*:!gr::	;-->		%currentEnv%_GTREF
+	WinGetTitle, title, A
+		WinGetTitle, getEnv, A
+	start := Instr(getEnv,"_GT")-3
+	env := SubStr(getEnv,start,4)
+	SendInput,use %env%GTREF{Shift down}{Home}{shift up}{f5}{delete}
 Return
-:*:!dq::	;-->		use prd_gtwrq
-	SendInput,use PRD_GTWRQ{Shift down}{Home}{shift up}{f5}{delete}
+:*:!gq::	;-->		%currentEnv%_GTWRQ
+	WinGetTitle, title, A
+		WinGetTitle, getEnv, A
+	start := Instr(getEnv,"_GT")-3
+	env := SubStr(getEnv,start,4)
+	SendInput,use %env%GTWRQ{Shift down}{Home}{shift up}{f5}{delete}
 Return
-:*:!ds::	;-->		use prd_gtsys
-	SendInput,use PRD_GTSYS{Shift down}{Home}{shift up}{f5}{delete}
+:*:!gs::	;-->		%currentEnv%_GTSYS
+	WinGetTitle, title, A
+		WinGetTitle, getEnv, A
+	start := Instr(getEnv,"_GT")-3
+	env := SubStr(getEnv,start,4)
+	SendInput,use %env%GTSYS{Shift down}{Home}{shift up}{f5}{delete}
 Return
-:*:!sa::	;-->		use prs_gtapp
-	SendInput,use PRS_GTAPP{Shift down}{Home}{shift up}{f5}{delete}
-Return
-:*:!sw::	;-->		use prs_gtweb
-	SendInput,use PRS_GTWEB{Shift down}{Home}{shift up}{f5}{delete}
-Return
-:*:!sr::	;-->		use prs_gtref
-	SendInput,use PRS_GTREF{Shift down}{Home}{shift up}{f5}{delete}
-Return
-:*:!sq::	;-->		use prs_gtwrq
-	SendInput,use PRS_GTWRQ{Shift down}{Home}{shift up}{f5}{delete}
-Return
-:*:!ss::	;-->		use prs_gtsys
-	SendInput,use PRS_GTSYS{Shift down}{Home}{shift up}{f5}{delete}
-Return
-:*:!fpub::	;-->		force a re-publish
-	clipboard :="use PRD_GTWEB`rdeclare @plngCustomerKey as integer = (select top 1 flngcustomerkey from TBLWebAccount)`rdelete TBLWebPublishData where flngCustomerKey = @plngCustomerKey`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey`ruse PRD_GTAPP`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey"
+:*:!fpub::	;-->		force a re-publish of top 1 customerkey
+	clipboard :="use PRD_GTWEB`r" 
+	+"declare @plngCustomerKey as integer = (select top 1 flngcustomerkey from TBLWebAccount)`r" 
+	+"delete TBLWebPublishData where flngCustomerKey = @plngCustomerKey`r" 
+	+"delete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey`r" 
+	+"use PRD_GTAPP`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey"
 	SendInput,^v
 	Sleep,45
 	SendInput,{shift down}{home}{up 5}{shift up}
@@ -284,19 +316,19 @@ Return
 	
 	start = 1
 	params := []
-	While InStr(SubStr(str,start),"@")>0
+	While InStr(SubStr(str,start),"@p")>0
 	{
-		start:= start + InStr(SubStr(str,start),"@")
+		start:= start + InStr(SubStr(str,start),"@p")
 		len_list := [Instr(SubStr(str,start)," "), Instr(SubStr(str,start),"`r"),Instr(SubStr(str,start),"`n"),Instr(Substr(str,start),")")]
 		sublen:=0
 
 		if len_list[1]>0
 			sublen:= len_list[1] -1
-		if (len_list[2]>0 and len_list[2] < sublen)
+		if (len_list[2] > 0 and len_list[2] < sublen)
 			sublen := len_list[2] -1
-		if (len_list[3]>0 and len_list[3] < sublen)
+		if (len_list[3] > 0 and len_list[3] < sublen)
 			sublen := len_list[3] -1
-		if (len_list[4]>0 and len_list[4] <= sublen)
+		if (len_list[4] > 0 and len_list[4] <= sublen)
 			sublen := len_list[4] -1
 			
 		bool:=0
@@ -332,7 +364,22 @@ Return
 		if Instr(value,"pdtm")=1
 			newvalue = declare @%value% as Date = '12/31/9999'
 		if(	Instr(value,"pint")=1 or Instr(value,"plng")= 1)
-			newvalue = declare @%value% as integer = 0
+			{
+				if Instr(value,"plngAccountKey")>0
+				{
+					newvalue = declare @%value% as integer = (select top 1 flngAccountKey from tblAccountInfo)
+				}
+				else if Instr(value,"plngCustomerKey")>0
+				{
+					newvalue = declare @%value% as integer = (select top 1 flngCustomerKey from tblCustomerInfo)
+				}
+				else
+				{
+					newvalue = declare @%value% as integer = 0
+				}
+			}
+		if Instr(value,"pbln")=1 
+			newvalue = declare @%value% as bit = 0
 			
 		clipboard := newvalue
 		Sleep, 45
@@ -342,14 +389,22 @@ Return
 	SendInput, {Return}
 Return
 !z::		;-->		zaudit query because the blame tool is too blamin' slow
-	clipboard :="Select l.fstrTable,l.fstrLogin,fstrtype,flngAffected,fdtmWhen,fstrLogData `rFrom  ZAUDIT_DATA d join ZAUDIT_LOG l on d.fstrid= l.fstrId`rwhere fstrTable like '`%`%'`r--and fstrColumn like '`%`%'`rorder by fdtmWhen desc"
+	clipboard :="Select l.fstrTable,l.fstrLogin,fstrtype,flngAffected,fdtmWhen,fstrLogData`r"
+	+"From  ZAUDIT_DATA d join ZAUDIT_LOG l on d.fstrid= l.fstrId`r"
+	+"where fstrTable like '`%`%'`r" 
+	+"--and fstrColumn like '`%`%'`r"
+	+"order by fdtmWhen desc"
 	Sleep, 45
 	SendInput,^v
 	Sleep, 45
 	SendInput,{Up}{Up}{Right 1}
 Return
 !+z::		;-->		information_schema.columns query
-	clipboard:="Select TABLE_NAME,COLUMN_NAME,COLUMN_DEFAULT,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH `rFrom  INFORMATION_SCHEMA.COLUMNS `rwhere TABLE_NAME like '`%`%' `r--and Column_name like '`%`%'`rorder by Table_Name asc"
+	clipboard:="Select TABLE_NAME,COLUMN_NAME,COLUMN_DEFAULT,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH `r"
+	+"From  INFORMATION_SCHEMA.COLUMNS `r"
+	+"where TABLE_NAME like '`%`%' `r"
+	+"--and Column_name like '`%`%'`r"
+	+"order by Table_Name asc"
 	Sleep, 45
 	SendInput,^v
 	Sleep, 45
@@ -449,7 +504,7 @@ Return
 Return
 :*B0:order by::	;-->		return after order by
 	global SqlStrings
-	if SqlStrings[0]="On"
+	if SqlStrings[0] = "On"
 	{
 		WinGetTitle, Title, A
 		if (InStr(Title,"Sql")>0
@@ -461,4 +516,10 @@ Return
 			SendInput,order by{Space}
 		}
 	}
+Return
+
+
+;-----------Testing Area--------------::;-->	This probably doesn't work yet
+#b::	;-->		something
+	MsgBox,something
 Return

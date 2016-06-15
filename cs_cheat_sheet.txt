@@ -1,11 +1,13 @@
 ChrisScript cheat sheet
-** updated 06-15-16-09-55
+** updated 06-15-16_13-04
 
 #			-->		windows key
 ^			-->		control key
 +			-->		shift key
 !			-->		alt key
-The "::" doesn't mean anything. End of command.
+
+The :: doesn't mean anything. End of command.
+
 -------------------------------Current Version--------------------------------
 
 !h::		;-->		open cheat sheet
@@ -13,8 +15,11 @@ The "::" doesn't mean anything. End of command.
 !c::		;-->		c drive
 #z::		;-->		z drive - project share
 #c::		;-->		command prompt {remove snark}
+#+b::		;-->		testing string concat
 !d::		;-->		gentaxDocs
 #d::		;-->		prd gentax folder
+^+d::		;-->		downloads
+^!d::		;-->		downloads
 !+h::		;-->		hotkeyfoler
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
 !n::		;-->		note plus plus{less snark}
@@ -32,8 +37,13 @@ The "::" doesn't mean anything. End of command.
 !k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
 !+k::		;-->		column of strings pasted as comma delimited list, put your cursor where you want it
 !a::		;-->		archive a timestamped version of your script and cheat sheet
-^+b::		;-->		move to next clipboard, then paste
+!i::		;-->		open ilspy
+
+
+
 ;-----------Gentax Doc Format section--------------::;-->	Common doc field formats
+
+
 :*:!ah::	;-->		autoheight
 :*:!fb::	;-->		font-bold
 :*:!cb::	;-->		caption-bold
@@ -41,20 +51,21 @@ The "::" doesn't mean anything. End of command.
 :*:!tt::	;--> 		showtip yourfieldname with "help" on the end
 :*:!bt::	;-->		button
 :*:!vl::	;-->		value label
-:*:!bb::	;-->		value label
-;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with winQ
+:*:!bb::	;-->		ftml bold brackets
+:*:!ii::	;-->		ftml italic brackets
+
+
+
+;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with Alt Q 
+
+
 !q::		;-->		Turn on/off sql specific stuff, still should only work in windows with "sql" or "script" in name, AHK only supports global arrays !?!?!
-:*:!da::	;-->		use prd_gtapp
-:*:!dw::	;-->		use prd_gtweb
-:*:!dr::	;-->		use prd_gtref
-:*:!dq::	;-->		use prd_gtwrq
-:*:!ds::	;-->		use prd_gtsys
-:*:!sa::	;-->		use prs_gtapp
-:*:!sw::	;-->		use prs_gtweb
-:*:!sr::	;-->		use prs_gtref
-:*:!sq::	;-->		use prs_gtwrq
-:*:!ss::	;-->		use prs_gtsys
-:*:!fpub::	;-->		force a re-publish
+:*:!ga::	;-->		%currentEnv%_GTAPP
+:*:!gw::	;-->		%currentEnv%_GTWEB
+:*:!gr::	;-->		%currentEnv%_GTREF
+:*:!gq::	;-->		%currentEnv%_GTWRQ
+:*:!gs::	;-->		%currentEnv%_GTSYS
+:*:!fpub::	;-->		force a re-publish of top 1 customerkey
 !+l::		;-->		write "like '%%'" and put cursor in middle
 !+d::		;-->		write "'12/31/9999'" and highlight month for quick edit
 !s::		;-->		write "select * from "
@@ -69,3 +80,10 @@ The "::" doesn't mean anything. End of command.
 :*B0:and::	;-->		return after and
 :*B0:group by::	;-->		return after group by
 :*B0:order by::	;-->		return after order by
+
+
+
+;-----------Testing Area--------------::;-->	This probably doesn't work yet
+
+
+#b::	;-->		something
