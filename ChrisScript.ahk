@@ -1,10 +1,14 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 !h::		;-->		open cheat sheet
-	run notepad.exe  cs_cheat_sheet.txt
+	run C:\Program Files\Notepad++\notepad++.exe  cs_cheat_sheet.txt
+Return
+#h::		;-->		open script
+	run C:\Program Files\Notepad++\notepad++.exe  ChrisScript.ahk
 Return
 !r::		;-->		refresh script
 	{
@@ -22,45 +26,32 @@ Return
 		run, C:\
 	}
 Return
-#z::		;-->		z drive - project share
+#z::		;-->		project share
 	{
-		run, Z:\
+		run, C:\Users\ckoutras\AppData\Roaming\Microsoft\Windows\Network Shortcuts\gt_test
 	}
 Return
-#c::		;-->		command prompt {remove snark}
+#c::		;-->		command prompt
 	{
 		run, cmd.exe
-	}
-Return
-#+b::		;-->		testing string concat
-	{
-		str := "one" 
-		+ " two"
-		str = %str% three 
-		MsgBox,%str% 
 	}
 Return
 
 !d::		;-->		gentaxDocs
 	{
-		run, C:\Users\chris.koutras\Desktop\gentaxDocs
+		run, C:\Users\ckoutras\Desktop\gentaxDocs
 	}
 Return
-#d::		;-->		prd gentax folder
+#d::		;-->		LVD gentax folder
 	{
-		run, C:\GenTax\PRD\Gentax
+		run, C:\GenTax\LVD\Gentax
 	}
 Return
 ^+d::		;-->		downloads
 	{
-		run, C:\Users\chris.koutras\Downloads
+		run, C:\Users\ckoutras\Downloads
 	}
-Return		
-^!d::		;-->		downloads
-	{
-		run, C:\Users\chris.koutras\Desktop
-	}
-Return	
+Return			
 !+h::		;-->		hotkeyfoler
 	{
 		run, C:\git\ahk
@@ -71,24 +62,25 @@ Return
 		run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 	}
 Return
-!n::		;-->		note plus plus{less snark}
+!n::		;-->		note plus plus
 	{
-		run, C:\Program Files (x86)\Notepad++\notepad++.exe
+		run, C:\Program Files\Notepad++\notepad++.exe
 	}
 Return
 !g::		;-->		gentax FDD should be in the same place for everyone
 	{
-		run, C:\Gentax\PRD\Gentax\gtGen.exe
+		run, C:\Gentax\LVD\Gentax\gtGen.exe
 	}
 Return
 !+g::		;-->		we don't have this yet
 	{
-		run, "https://fastcentralrepository.hacienda.gobierno.pr/links/" 
+		MsgBox, Links don't exists yet
+		;run, "https://fastcentralrepository.hacienda.gobierno.pr/links/" 
 	}
 return
-!f::		;-->		PR site fcr
+!f::		;-->		LV site fcr
 	{
-		run, C:\GenTax\FCR\GenTax\gtGen.exe AutoStart_FCR, net.tcp://hacgtxappfcr01:8001/FCR/Repository/Gentax.svc
+		run, "C:\GenTax\LV FCR\GenTax\gtGen.exe" AutoStart_LV FCR,https://revgtappfcr01.revenue.org/FCR/Repository/GenTax.svc
 	}
 Return
 !+f::		;-->		denver FCR
@@ -189,7 +181,7 @@ Return
 		SendInput,% newstr
 		SendInput,`'
 	}
-Return
+Return!j::		;-->		row of non-strings pasted as comma delimited list, put your cursor where you want it	{		str := "" . clipboard . ""		newstr := "" . StrReplace(str,"`r`n",",") . ""		SendInput,% newstr	}Return!+j::		;-->		ow of strings pasted as comma delimited list, put your cursor where you want it	{		str := "" . clipboard . ""		newstr := "" . StrReplace(str,"`r`n","',`'") . ""		SendInput,`'		SendInput,% newstr		SendInput,`'	}Return!u::		;-->		paste everything in the global clip list	{		global clip_list		global clip_index		start_index := clip_index		for i in clip_list			SendInput,% clip_list[i]			SendInput, `,			Sleep,45	}Return
 !a::		;-->		archive a timestamped version of your script and cheat sheet
 	{
 		FormatTime, CurrentDateTime,, MM-dd-yy_HH-mm
@@ -247,9 +239,9 @@ Return
 		MsgBox, Archive action complete
 	}
 Return
-!i::		;-->		open ilspy
+!i::		;-->		kill gentax
 	{
-		run, C:\git\ILSpy_Master_2.3.2_Binaries\ILSpy.exe
+		run, C:\Users\ckoutras\Desktop\killgen.bat
 	}
 Return
 
@@ -274,6 +266,11 @@ Return
 		SendInput,[ftml=true]
 	}
 Return
+:*:!tb::	;-->		TitleBar
+	{
+		SendInput,[Titlebar=true]
+	}
+Return
 :*:!tt::	;--> 		showtip yourfieldname with "help" on the end
 	{
 		SendInput,[ShowTip=
@@ -281,7 +278,7 @@ Return
 		Sleep, 45
 		SendInput,Help]
 	}
-return
+Return
 :*:!bt::	;-->		button
 	{
 		SendInput,[button=true]
@@ -300,6 +297,66 @@ Return
 :*:!ii::	;-->		ftml italic brackets
 	{
 		SendInput,[i][/i]{Left 4}
+	}
+Return	
+:*:!ck::	;-->		my email
+	{
+		SendInput, ckoutras@metrorevenue.org
+	}
+Return	
+
+;-----------XML Specific section--------------::;-->	Some xsd and xml strings i used a lot
+:*:!xsr::	;-->		restricted xsd elemetn
+	{
+		clipboard :="<xsd:element name="""">`r" 
+		+"`t<xsd:annotation>`r" 
+		+"`t`t<xsd:documentation>`r`t`t`tfill out the documentation`r" 
+		+"`t`t</xsd:documentation>`r" 
+		+"`t</xsd:annotation>`r"
+		+"`t<xsd:simpleType>`r" 
+		+"`t`t<xsd:restriction base =""String50Type"">`r" 
+		+"`t`t`t<xsd:enumeration value=""Yes""/>`r" 
+		+"`t`t`t<xsd:enumeration value=""No""/>`r"
+		+"`t`t</xsd:restriction>`r"
+		+"`t</xsd:simpleType>`r"
+		+"</xsd:element>"
+		SendInput,^v
+		Sleep, 45
+		SendInput,{Up 13}{Right 5}
+	}
+Return	
+:*:!xss::	;-->		simple xsd elemetn
+	{
+		clipboard :="<xsd:element name="""" type=""AmountType"">`r" 
+		+"`t`t`t`t<xsd:annotation>`r" 
+		+"`t`t`t`t`t<xsd:documentation>`rfill out the documentation`r" 
+		+"`t`t`t`t`t</xsd:documentation>`r" 
+		+"`t`t`t`t</xsd:annotation>`r"
+		+"`t`t`t</xsd:element>"
+		SendInput,^v
+		Sleep, 45
+		SendInput,{Up 7}{Right 5}
+	}
+Return	
+:*:!xel::	;-->		element from clipboard
+	{
+		SendInput,<
+		SendInput,^+{space}
+		Sleep, 45
+		SendInput,{right}></
+		Sleep, 45
+		SendInput,^+v
+		Sleep, 45
+		SendInput,>
+		Sleep, 45
+		
+		de_length := StrLen(clipboard)
+
+		if de_lenth < 100 ;dont highlight for large strings
+		{
+			Sleep, 45
+			SendInput,{Left %de_length%}{Left 3}
+		}
 	}
 Return	
 
@@ -324,10 +381,10 @@ Return
 	{
 		WinGetTitle, title, A
 			WinGetTitle, getEnv, A
-		if(Instr(getEnv,"HACGTXSQLPRT")>0)
-			env:="PRD_"
+		if(Instr(getEnv,"TestGTDBT01")>0)
+			env:="LVD_"
 		else
-			env:="PRS_"
+			env:="LVS_"
 		SendInput,use %env%GTAPP{Shift down}{Home}{shift up}{f5}{delete}
 	}
 Return
@@ -335,10 +392,10 @@ Return
 	{
 		WinGetTitle, title, A
 			WinGetTitle, getEnv, A
-		if(Instr(getEnv,"HACGTXSQLPRT")>0)
-			env:="PRD_"
+		if(Instr(getEnv,"TestGTDBT01")>0)
+			env:="LVD_"
 		else
-			env:="PRS_"
+			env:="LVS_"
 		SendInput,use %env%GTWEB{Shift down}{Home}{shift up}{f5}{delete}
 	}
 Return
@@ -346,10 +403,10 @@ Return
 	{
 		WinGetTitle, title, A
 			WinGetTitle, getEnv, A
-		if(Instr(getEnv,"HACGTXSQLPRT")>0)
-			env:="PRD_"
+		if(Instr(getEnv,"TestGTDBT01")>0)
+			env:="LVD_"
 		else
-			env:="PRS_"
+			env:="LVS_"
 		SendInput,use %env%GTREF{Shift down}{Home}{shift up}{f5}{delete}
 	}
 Return
@@ -357,10 +414,10 @@ Return
 	{
 		WinGetTitle, title, A
 			WinGetTitle, getEnv, A
-		if(Instr(getEnv,"HACGTXSQLPRT")>0)
-			env:="PRD_"
+		if(Instr(getEnv,"TestGTDBT01")>0)
+			env:="LVD_"
 		else
-			env:="PRS_"
+			env:="LVS_"
 		SendInput,use %env%GTWRQ{Shift down}{Home}{shift up}{f5}{delete}
 	}
 Return
@@ -368,20 +425,20 @@ Return
 	{
 		WinGetTitle, title, A
 			WinGetTitle, getEnv, A
-		if(Instr(getEnv,"HACGTXSQLPRT")>0)
-			env:="PRD_"
+		if(Instr(getEnv,"TestGTDBT01")>0)
+			env:="LVD_"
 		else
-			env:="PRS_"
+			env:="LVS_"
 		SendInput,use %env%GTSYS{Shift down}{Home}{shift up}{f5}{delete}
 	}
 Return
 :*:!fpub::	;-->		force a re-publish of top 1 customerkey
 	{
-		clipboard :="use PRD_GTWEB`r" 
+		clipboard :="use LVD_GTWEB`r" 
 		+"declare @plngCustomerKey as integer = (select top 1 flngcustomerkey from TBLWebAccount)`r" 
 		+"delete TBLWebPublishData where flngCustomerKey = @plngCustomerKey`r" 
 		+"delete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey`r" 
-		+"use PRD_GTAPP`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey"
+		+"use LVD_GTAPP`rdelete TBLWebCustomerLastPublished where flngCustomerKey = @plngCustomerKey"
 		SendInput,^v
 		Sleep,45
 		SendInput,{shift down}{home}{up 5}{shift up}
@@ -646,5 +703,13 @@ Return
 #b::	;-->		something
 	{
 		MsgBox,something
+	}
+Return
+#+b::		;-->		testing string concat
+	{
+		str := "one" 
+		+ " two"
+		str = %str% three 
+		MsgBox,%str% 
 	}
 Return

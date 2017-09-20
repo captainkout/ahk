@@ -1,5 +1,5 @@
 ChrisScript cheat sheet
-** updated 06-15-16_14-04
+** updated 09-06-17_11-14
 
 #			-->		windows key
 ^			-->		control key
@@ -11,21 +11,20 @@ The :: doesn't mean anything. End of command.
 -------------------------------Current Version--------------------------------
 
 !h::		;-->		open cheat sheet
+#h::		;-->		open script
 !r::		;-->		refresh script
 !c::		;-->		c drive
-#z::		;-->		z drive - project share
-#c::		;-->		command prompt {remove snark}
-#+b::		;-->		testing string concat
+#z::		;-->		project share
+#c::		;-->		command prompt
 !d::		;-->		gentaxDocs
-#d::		;-->		prd gentax folder
+#d::		;-->		LVD gentax folder
 ^+d::		;-->		downloads
-^!d::		;-->		downloads
 !+h::		;-->		hotkeyfoler
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
-!n::		;-->		note plus plus{less snark}
+!n::		;-->		note plus plus
 !g::		;-->		gentax FDD should be in the same place for everyone
 !+g::		;-->		we don't have this yet
-!f::		;-->		PR site fcr
+!f::		;-->		LV site fcr
 !+f::		;-->		denver FCR
 !e::		;-->		Fast Environments
 !+e::		;-->		Fast Forums
@@ -37,7 +36,7 @@ The :: doesn't mean anything. End of command.
 !k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
 !+k::		;-->		column of strings pasted as comma delimited list, put your cursor where you want it
 !a::		;-->		archive a timestamped version of your script and cheat sheet
-!i::		;-->		open ilspy
+!i::		;-->		kill gentax
 
 
 
@@ -48,11 +47,22 @@ The :: doesn't mean anything. End of command.
 :*:!fb::	;-->		font-bold
 :*:!cb::	;-->		caption-bold
 :*:!ft::	;-->		ftml
+:*:!tb::	;-->		TitleBar
 :*:!tt::	;--> 		showtip yourfieldname with "help" on the end
 :*:!bt::	;-->		button
 :*:!vl::	;-->		value label
 :*:!bb::	;-->		ftml bold brackets
 :*:!ii::	;-->		ftml italic brackets
+:*:!ck::	;-->		my email
+
+
+
+;-----------XML Specific section--------------::;-->	Some xsd and xml strings i used a lot
+
+
+:*:!xsr::	;-->		restricted xsd elemetn
+:*:!xss::	;-->		simple xsd elemetn
+:*:!xel::	;-->		element from clipboard
 
 
 
@@ -87,3 +97,4 @@ The :: doesn't mean anything. End of command.
 
 
 #b::	;-->		something
+#+b::		;-->		testing string concat
