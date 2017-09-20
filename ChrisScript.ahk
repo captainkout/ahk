@@ -69,7 +69,7 @@ Return
 Return
 !g::		;-->		gentax FDD should be in the same place for everyone
 	{
-		run, C:\Gentax\LVD\Gentax\gtGen.exe
+		run, C:\Gentax\LVD\Gentax\Components\gtGen.exe
 	}
 Return
 !+g::		;-->		we don't have this yet
@@ -181,7 +181,27 @@ Return
 		SendInput,% newstr
 		SendInput,`'
 	}
-Return!j::		;-->		row of non-strings pasted as comma delimited list, put your cursor where you want it	{		str := "" . clipboard . ""		newstr := "" . StrReplace(str,"`r`n",",") . ""		SendInput,% newstr	}Return!+j::		;-->		ow of strings pasted as comma delimited list, put your cursor where you want it	{		str := "" . clipboard . ""		newstr := "" . StrReplace(str,"`r`n","',`'") . ""		SendInput,`'		SendInput,% newstr		SendInput,`'	}Return!u::		;-->		paste everything in the global clip list	{		global clip_list		global clip_index		start_index := clip_index		for i in clip_list			SendInput,% clip_list[i]			SendInput, `,			Sleep,45	}Return
+Return!j::		;-->		row of non-strings pasted as comma delimited list, put your cursor where you want it	{		str := "" . clipboard . ""		newstr := "" . StrReplace(str,"`r`n",",") . ""		SendInput,% newstr	}Return!+j::		;-->		ow of strings pasted as comma delimited list, put your cursor where you want it	{		str := "" . clipboard . ""		newstr := "" . StrReplace(str,"`r`n","',`'") . ""		SendInput,`'		SendInput,% newstr		SendInput,`'	}Return!u::		;-->		paste everything in the global clip list as a comma delimited string	{		global clip_list		global clip_index		start_index := clip_index
+		max_index := clip_list.MaxIndex()		Loop, %max_index%
+		{
+			SendInput,% clip_list[a_index]
+			Sleep, 45
+			SendInput, `, {space}
+		}	}
+!+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
+	{
+		global clip_list
+		global clip_index
+		start_index := clip_index
+		max_index := clip_list.MaxIndex()
+		Loop, %max_index%
+		{	
+			SendInput, `'
+			SendInput,% clip_list[a_index]
+			SendInput, `'`,{space}
+			Sleep, 45
+		}
+	}Return
 !a::		;-->		archive a timestamped version of your script and cheat sheet
 	{
 		FormatTime, CurrentDateTime,, MM-dd-yy_HH-mm
