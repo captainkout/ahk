@@ -1,0 +1,73 @@
+MinScript cheat sheet
+** updated 08-21-19_11-13
+
+#			-->		windows key
+^			-->		control key
++			-->		shift key
+!			-->		alt key
+
+The :: doesn't mean anything. End of command.
+
+-------------------------------Current Version--------------------------------
+
+!h::		;-->		open cheat sheet
+!+h::		;-->		open script
+#+h::		;-->		hotkeyfoler
+!r::		;-->		refresh script
+!c::		;-->		c drive
+#c::		;-->		command prompt
+!o::		;-->		repos
+^+d::		;-->		downloads
+!+c::		;-->		open new chrome, works even if chrome is unresponsive
+!v::		;-->		vscode
+#s::		;-->		startup
+^+c::		;-->		add to clipboard (removed max index)
+^+v::		;-->		paste current clipboard
+^+space::	;-->		move to next clipboard, then paste
+^!space::	;-->		move to to previous clipboard, then paste
+^+x::		;-->		Wipe out all clipboards and start index over
+!k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
+!+k::		;-->		column of strings pasted as comma delimited list, put your cursor where you want it
+!j::		;-->		row of non-strings pasted as comma delimited list, put your cursor where you want it
+!+j::		;-->		row of strings pasted as comma delimited list, put your cursor where you want it
+!u::		;-->		paste everything in the global clip list as a comma delimited string
+!+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
+!a::		;-->		archive a timestamped version of your script and cheat sheet
+!i::		;-->		kill gentax
+!NumpadEnter::        ;-->        highlight word
+
+
+
+;-----------Code Specific section--------------::;-->	Some things i typed too often in code
+
+
+:*:!get::	;--> 		write "{get: set;}"
+
+
+
+;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with Alt Q 
+
+
+!q::		;-->		Turn on/off sql specific stuff, still should only work in windows with "sql" or "script" in name, AHK only supports global arrays !?!?!
+!+l::		;-->		write "like '%%'" and put cursor in middle
+!+d::		;-->		write "'12/31/9999'" and highlight month for quick edit
+!s::		;-->		write "select * from "
+!+s::		;-->		write "select top 100 * from "
+!p::		;-->		Declare all parameters from highlighted query
+!z::		;-->		zaudit query because the blame tool is too blamin' slow
+!+z::		;-->		information_schema.columns query
+:*B0:'::	;-->		close single quote only in sql or gentax sqleditor
+:*:,::		;-->		return after commas
+:*B0:from::	;-->		return after from
+:*B0:where::	;-->		return after where
+:*B0:and::	;-->		return after and
+:*B0:group by::	;-->		return after group by
+:*B0:order by::	;-->		return after order by
+
+
+
+;-----------Testing Area--------------::;-->	This probably doesn't work yet
+
+
+#b::	;-->		something
+#+b::		;-->		testing string concat

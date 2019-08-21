@@ -19,7 +19,7 @@ The :: doesn't mean anything. End of command.
 !d::		;-->		gentaxDocs
 #d::		;-->		LVD gentax folder
 ^+d::		;-->		downloads
-!+h::		;-->		hotkeyfoler
+!+h::		;-->		hotkeyfolHer
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
 !n::		;-->		note plus plus
 !g::		;-->		gentax FDD should be in the same place for everyone
