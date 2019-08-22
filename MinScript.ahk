@@ -5,14 +5,14 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 !h::		;-->		open cheat sheet
-    run C:\Users\ckoutras\AppData\Local\Programs\Microsoft VS Code\Code.exe  ms_cheat_sheet.txt
+    run C:\Users\%A_UserName% \AppData\Local\Programs\Microsoft VS Code\Code.exe  ms_cheat_sheet.txt
 Return
 !+h::		;-->		open script
-    run C:\Users\ckoutras\AppData\Local\Programs\Microsoft VS Code\Code.exe  MinScript.ahk
+    run C:\Users\%A_UserName% \AppData\Local\Programs\Microsoft VS Code\Code.exe  MinScript.ahk
 Return
 #+h::		;-->		hotkeyfoler
     {
-        run, C:\Users\ckoutras\source\repos\ahk
+        run, C:\Users\%A_UserName% \source\repos\ahk
     }
 Return
 !r::		;-->		refresh script
@@ -38,12 +38,12 @@ Return
 Return
 !o::		;-->		repos
     {
-        run, C:\Users\ckoutras\source\repos
+        run, C:\Users\%A_UserName% \source\repos
     }
 Return
 ^+d::		;-->		downloads
     {
-        run, C:\Users\ckoutras\Downloads
+        run, C:\Users\%A_UserName% \Downloads
     }
 Return		
 !+c::		;-->		open new chrome, works even if chrome is unresponsive
@@ -53,12 +53,12 @@ Return
 Return
 !v::		;-->		vscode
     {
-        run, C:\Users\ckoutras\AppData\Local\Programs\Microsoft VS Code\Code.exe
+        run, C:\Users\%A_UserName% \AppData\Local\Programs\Microsoft VS Code\Code.exe
     }
 Return
 #s::		;-->		startup
     {
-        run, C:\Users\ckoutras\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+        run, C:\Users\%A_UserName% \AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
     }
 Return
 ^+c::		;-->		add to clipboard (removed max index)
@@ -259,7 +259,7 @@ Return
 Return
 !i::		;-->		kill gentax
     {
-        run, C:\Users\ckoutras\Desktop\killgen.bat
+        run, C:\Users\%A_UserName% \Desktop\killgen.bat
     }
 Return
 !Numpad1::  ;-->        highlight word
