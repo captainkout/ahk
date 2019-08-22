@@ -1,0 +1,55 @@
+FundamentalScript cheat sheet
+** updated 08-22-19_11-07
+
+#			-->		windows key
+^			-->		control key
++			-->		shift key
+!			-->		alt key
+
+The :: doesn't mean anything. End of command.
+
+-------------------------------Current Version--------------------------------
+
+!h::		;-->		open cheat sheet
+!c::		;-->		c drive
+!d::		;-->		downloads
+!+c::		;-->		open new chrome, works even if chrome is unresponsive
+#s::		;-->		startup folder
+^+c::		;-->		add to clipboard (removed max index)
+^+v::		;-->		paste current clipboard
+^+space::	;-->		move to next clipboard, then paste
+^!space::	;-->		move to to previous clipboard, then paste
+^+x::		;-->		Wipe out all clipboards and start index over
+!u::		;-->		paste everything in the global clip list as a comma delimited string
+!+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
+!k::		;-->		Sql column values pasted as comma delimited list, put your cursor where you want it
+!+k::		;-->		Sql column values pasted as comma delimited list, put your cursor where you want it
+!j::		;-->		Sql row values pasted as comma delimited list, put your cursor where you want it
+!+j::		;-->		Sql row values pasted as comma delimited list, put your cursor where you want it
+!Numpad1::  ;-->        highlight word
+!Numpad2::  ;-->        highlight stuff in quotes
+
+
+
+;-----------Code Specific section--------------::;-->	Some things i typed too often in code
+
+
+:*:!get::	;--> 		write "{get: set;}"
+
+
+
+;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with Alt Q 
+
+
+!+l::		;-->		write "like '%%'" and put cursor in middle
+!+d::		;-->		write "'12/31/9999'" and highlight month for quick edit
+!s::		;-->		write "select * from "
+!+s::		;-->		write "select top 100 * from "
+!+z::		;-->		information_schema.columns query
+
+
+
+;-----------Archive section--------------::;-->	
+
+
+!a::		;-->		archive a timestamped version of your script and cheat sheet
