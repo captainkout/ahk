@@ -1,4 +1,5 @@
 
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -62,82 +63,72 @@ Return
     }
 Return
 ^+c::		;-->		add to clipboard (removed max index)
-    {
-        global clip_list
-        global clip_index
-        if clip_list.MaxIndex()=""
-        {
-            clip_index:= 0
-            clip_list :=[]
-        }
-        SendInput,^c
-        sleep, 100
-        clip_index :=clip_index + 1
-        clip_list[clip_index] := "" . clipboard . ""
-    }
-    
+	{
+		global clip_list
+		global clip_index
+		if clip_list.MaxIndex()=""
+		{
+			clip_index:= 0
+			clip_list :=[]
+		}
+		SendInput,^c
+		sleep, 100
+		clip_index :=clip_index + 1
+		clip_list[clip_index] := "" . clipboard . ""
+	}
+
 Return
 ^+v::		;-->		paste current clipboard
-    {
-        global clip_list
-        global clip_index
-        clipboard := clip_list[clip_index]
-        SendInput,^v
-    }
+	{
+		global clip_list
+		global clip_index
+		clipboard := clip_list[clip_index]
+		SendInput,^v
+	}
 Return
 ^+space::	;-->		move to next clipboard, then paste
-    {
-        global clip_list
-        global clip_index
-        clip_index :=Mod(clip_index, clip_list.MaxIndex())+1
-        clipboard := clip_list[clip_index]
-        
-        splatArray := StrSplit(RTrim("" . clipboard . ""),"`r`n")
-        SendInput,^v
-        Sleep, 45
-        lastStr := splatArray[splatArray.MaxIndex()]
-        xCoord := StrLen(lastStr)
-        yCoord := splatArray.MaxIndex()-1
-        
-        if (yCoord < 100 and xCoord <100) 
-        {
-            SendInput,{ShiftDown}{Left %xCoord%}{Up %yCoord%}{ShiftUp}}
-        }
-        
-    }
+	{
+		global clip_list
+		global clip_index
+		clip_index :=Mod(clip_index, clip_list.MaxIndex())+1
+		clipboard := clip_list[clip_index]
+		de_length := StrLen(clipboard)
+		SendInput,^v
+		if de_lenth < 100 ;dont highlight for large strings
+		{
+			Sleep, 45
+			SendInput,{Shift Down}{Left %de_length%}{Shift Up}
+		}
+	}
 Return
 ^!space::	;-->		move to to previous clipboard, then paste
-    {
-        global clip_list
-        global clip_index
-        clip_index :=Mod(clip_index-1, clip_list.MaxIndex())
-        if clip_index <1 ;weird definition of modulus
-        {
-            clip_index := clip_list.MaxIndex()
-        }
-        clipboard := clip_list[clip_index]
-        
-        splatArray := StrSplit(RTrim("" . clipboard . ""),"`r`n")
-        SendInput,^v
-        Sleep, 45
-        lastStr := splatArray[splatArray.MaxIndex()]
-        xCoord := StrLen(lastStr)
-        yCoord := splatArray.MaxIndex()-1
-        
-        if (yCoord < 100 and xCoord <100) 
-        {
-            SendInput,{ShiftDown}{Left %xCoord%}{Up %yCoord%}{ShiftUp}}
-        }
-    }
+	{
+		global clip_list
+		global clip_index
+		clip_index :=Mod(clip_index-1, clip_list.MaxIndex())
+		if clip_index <1 ;weird definition of modulus
+		{
+			clip_index := clip_list.MaxIndex()
+		}
+		clipboard := clip_list[clip_index]
+		de_length := StrLen(clipboard)
+		SendInput,^v
+		Sleep, 45
+		if de_lenth < 100 ;dont highlight for large strings
+		{
+			Sleep, 45
+			SendInput,{Shift Down}{Left %de_length%}{Shift Up}
+		}
+	}
 Return
 
 ^+x::		;-->		Wipe out all clipboards and start index over
-    {
-        global clip_list
-        global clip_index
-        clip_list := []
-        clip_index :=0
-    }
+	{
+		global clip_list
+		global clip_index
+		clip_list := []
+		clip_index :=0
+	}
 Return
 !k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
     {
@@ -262,13 +253,14 @@ Return
         run, C:\Users\ckoutras\Desktop\killgen.bat
     }
 Return
-!Numpad1::  ;-->        highlight word
+!Numpad1::        ;-->        highlight word
     {
         SendInput, {shift down}{home}{shift up}
-        Sleep, 15
+        Sleep, 500
         SendInput, ^c
-        Sleep, 15
+        Sleep, 45
         SendInput, {right}
+        Sleep, 45
         
         wholeLeft := "" . clipboard . ""
         wlLen := StrLen(wholeLeft) + 1
@@ -284,40 +276,42 @@ Return
         }
         
         SendInput, {shift down}{end}{shift up}
-        Sleep, 15
+        Sleep, 500
         SendInput, ^c
-        Sleep, 15
+        Sleep, 45
         SendInput, {left}
-        
+        Sleep, 45
         wholeRight := "" . clipboard . ""
         rightPos := RegExMatch(wholeRight,"[^a-zA-Z0-9_]") - 1 ; this will be neg1 if nothing found by end of string
         if (rightPos < 0) {
             rightPos := StrLen(wholeRight)
         }
-        
         totLen := leftPos + rightPos
         SendInput, {left %leftPos%}
-        Sleep, 15
+        Sleep, 45
         SendInput, {shift down}
-            Sleep, 15
+        Sleep, 45
         SendInput, {right %totLen%}
-        Sleep, 15
+        Sleep, 45
         SendInput, {shift up}  
-            
-        clipboard := clip_list[clip_index]
+        
+		clipboard := clip_list[clip_index]
     }
 Return   
-!Numpad2::  ;-->        highlight stuff in quotes
+!Numpad2::     ;-->        highlight stuff in quotes
     {
         global clip_list
-        global clip_index
-        
-        SendInput, {shift down}{home}{shift up}
-        Sleep, 15
+		global clip_index
+
+        SendInput, {shift down}{home}
+        Sleep, 45
+        SendInput, {shift up}
+        Sleep, 45
         SendInput, ^c
-        Sleep, 15
+        Sleep, 45
         SendInput, {right}
-        
+        Sleep, 45
+
         wholeLeft := "" . clipboard . ""
         wlLen := StrLen(wholeLeft) + 1
         leftPos := 0 ;this will be strlen if nothing found by end of string
@@ -326,19 +320,21 @@ Return
             leftFind := SubStr(wholeLeft, subPos)
             leftTest := SubStr(wholeLeft,0)
             leftPos := A_Index - 1
-            if (RegExMatch(leftFind,"[""'']")) {
+            if (RegExMatch(leftFind,"[""]")) {
                 Break
             }
         }
-        
-        SendInput, {shift down}{end}{shift up}
-        Sleep, 15
+
+        SendInput, {shift down}{end}
+        Sleep, 45
+        SendInput, {shift up}
+        Sleep, 45
         SendInput, ^c
-        Sleep, 15
+        Sleep, 45
         SendInput, {left}
-        
+        Sleep, 45
         wholeRight := "" . clipboard . ""
-        rightPos := RegExMatch(wholeRight,"[""'']") - 1 ; this will be neg1 if nothing found by end of string
+        rightPos := RegExMatch(wholeRight,"[""]") - 1 ; this will be neg1 if nothing found by end of string
         if (rightPos < 0) {
             rightPos := StrLen(wholeRight)
         }
@@ -346,10 +342,14 @@ Return
         if (StrLen(wholeLeft) + StrLen(wholeRight)> totLen) {
             SendInput, {left %leftPos%}
             Sleep, 45
-            SendInput, {shift down}{right %totLen%}{shift up}  
+            SendInput, {shift down}
+            Sleep, 45
+            SendInput, {right %totLen%}
+            Sleep, 45
+            SendInput, {shift up}  
         }
-        
-        clipboard := clip_list[clip_index]
+
+		clipboard := clip_list[clip_index]
     }
 Return
 ;-----------Code Specific section--------------::;-->	Some things i typed too often in code
@@ -629,39 +629,57 @@ Return
         }
     }
 Return
-;-----------Up Keys--------------::;-->	If the something is stuck, send all the up inputs
-!Home::
-    {
-        SendInput, {Shift up}
-            GetKeyState, state, shift
-            ; SendInput, {shift up}
-        ; Sleep, 45
-        ; SendInput, {control up}
-        ; Sleep, 45
-        ; SendInput, {shift up}
-        MsgBox, %state%
-        
-    }
-Return
+
 ;-----------Testing Area--------------::;-->	This probably doesn't work yet
 #b::	;-->		something
     {
-        ; SendInput, {ShiftDown}
-        ; stateShift := GetKeyState("Shift")
-        ; SendInput, {ShiftUp}
-        ; stateControl := GetKeyState("Control")
-        ; MsgBox, stateShift: %stateShift%, sateControl: %stateControl%
-        
-        SendInput, onetwothree
-        Sleep,45
-        SendInput, {Shift Down}{home}{Shift Up}
-        
+        global clip_list
+        global clip_index
+        MsgBox, %clip_index%
     }
 Return
 #+b::		;-->		testing string concat
     {
-        clipval := "" . clipboard . ""
-        RegExReplace(clipval,"\v" , "", twiceVert)
-        MsgBox, %c%
+        SendInput, {shift down}{home}{shift up}
+        Sleep, 45
+        SendInput, ^c
+        Sleep, 45
+        SendInput, {right}
+        Sleep, 45
+        
+        wholeLeft := "" . clipboard . ""
+        wlLen := StrLen(wholeLeft) + 1
+        leftPos := 0 ;this will be strlen if nothing found by end of string
+        loop, %wlLen% {
+            subPos := -1*(A_Index -1)
+            leftFind := SubStr(wholeLeft, subPos)
+            leftTest := SubStr(wholeLeft,0)
+            leftPos := A_Index - 1
+            if (RegExMatch(leftFind,"[^a-zA-Z0-9_]")) {
+                Break
+            }
+        }
+        
+        ; SendInput, {shift down}{end}{shift up}
+        ; Sleep, 500
+        ; SendInput, ^C
+        ; Sleep, 45
+        ; SendInput, {left}
+        ; Sleep, 45
+        ; wholeRight := "" . clipboard . ""
+        ; rightPos := RegExMatch(wholeRight,"[^a-zA-Z0-9_]") - 1 ; this will be neg1 if nothing found by end of string
+        ; if (rightPos < 0) {
+        ;     rightPos := StrLen(wholeRight)
+        ; }
+        ; totLen := leftPos + rightPos
+        ; SendInput, {left %leftPos%}
+        ; Sleep, 45
+        ; SendInput, {shift down}
+        ; Sleep, 45
+        ; SendInput, {right %totLen%}
+        ; Sleep, 45
+        ; SendInput, {shift up}  
+        
+		; clipboard := clip_list[clip_index]
     }
 Return 

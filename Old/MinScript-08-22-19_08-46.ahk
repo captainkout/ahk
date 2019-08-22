@@ -1,4 +1,5 @@
 
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -62,38 +63,38 @@ Return
     }
 Return
 ^+c::		;-->		add to clipboard (removed max index)
-    {
-        global clip_list
-        global clip_index
-        if clip_list.MaxIndex()=""
-        {
-            clip_index:= 0
-            clip_list :=[]
-        }
-        SendInput,^c
-        sleep, 100
-        clip_index :=clip_index + 1
-        clip_list[clip_index] := "" . clipboard . ""
-    }
-    
+	{
+		global clip_list
+		global clip_index
+		if clip_list.MaxIndex()=""
+		{
+			clip_index:= 0
+			clip_list :=[]
+		}
+		SendInput,^c
+		sleep, 100
+		clip_index :=clip_index + 1
+		clip_list[clip_index] := "" . clipboard . ""
+	}
+
 Return
 ^+v::		;-->		paste current clipboard
-    {
-        global clip_list
-        global clip_index
-        clipboard := clip_list[clip_index]
-        SendInput,^v
-    }
+	{
+		global clip_list
+		global clip_index
+		clipboard := clip_list[clip_index]
+		SendInput,^v
+	}
 Return
 ^+space::	;-->		move to next clipboard, then paste
-    {
-        global clip_list
-        global clip_index
-        clip_index :=Mod(clip_index, clip_list.MaxIndex())+1
-        clipboard := clip_list[clip_index]
-        
+	{
+		global clip_list
+		global clip_index
+		clip_index :=Mod(clip_index, clip_list.MaxIndex())+1
+		clipboard := clip_list[clip_index]
+		
         splatArray := StrSplit(RTrim("" . clipboard . ""),"`r`n")
-        SendInput,^v
+		SendInput,^v
         Sleep, 45
         lastStr := splatArray[splatArray.MaxIndex()]
         xCoord := StrLen(lastStr)
@@ -104,21 +105,21 @@ Return
             SendInput,{ShiftDown}{Left %xCoord%}{Up %yCoord%}{ShiftUp}}
         }
         
-    }
+	}
 Return
 ^!space::	;-->		move to to previous clipboard, then paste
-    {
-        global clip_list
-        global clip_index
-        clip_index :=Mod(clip_index-1, clip_list.MaxIndex())
-        if clip_index <1 ;weird definition of modulus
-        {
-            clip_index := clip_list.MaxIndex()
-        }
-        clipboard := clip_list[clip_index]
-        
+	{
+		global clip_list
+		global clip_index
+		clip_index :=Mod(clip_index-1, clip_list.MaxIndex())
+		if clip_index <1 ;weird definition of modulus
+		{
+			clip_index := clip_list.MaxIndex()
+		}
+		clipboard := clip_list[clip_index]
+
         splatArray := StrSplit(RTrim("" . clipboard . ""),"`r`n")
-        SendInput,^v
+		SendInput,^v
         Sleep, 45
         lastStr := splatArray[splatArray.MaxIndex()]
         xCoord := StrLen(lastStr)
@@ -128,16 +129,16 @@ Return
         {
             SendInput,{ShiftDown}{Left %xCoord%}{Up %yCoord%}{ShiftUp}}
         }
-    }
+	}
 Return
 
 ^+x::		;-->		Wipe out all clipboards and start index over
-    {
-        global clip_list
-        global clip_index
-        clip_list := []
-        clip_index :=0
-    }
+	{
+		global clip_list
+		global clip_index
+		clip_list := []
+		clip_index :=0
+	}
 Return
 !k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
     {
@@ -262,7 +263,7 @@ Return
         run, C:\Users\ckoutras\Desktop\killgen.bat
     }
 Return
-!Numpad1::  ;-->        highlight word
+!Numpad1::        ;-->        highlight word
     {
         SendInput, {shift down}{home}{shift up}
         Sleep, 15
@@ -288,36 +289,36 @@ Return
         SendInput, ^c
         Sleep, 15
         SendInput, {left}
-        
+
         wholeRight := "" . clipboard . ""
         rightPos := RegExMatch(wholeRight,"[^a-zA-Z0-9_]") - 1 ; this will be neg1 if nothing found by end of string
         if (rightPos < 0) {
             rightPos := StrLen(wholeRight)
         }
-        
+
         totLen := leftPos + rightPos
         SendInput, {left %leftPos%}
         Sleep, 15
         SendInput, {shift down}
-            Sleep, 15
+        Sleep, 15
         SendInput, {right %totLen%}
         Sleep, 15
         SendInput, {shift up}  
-            
-        clipboard := clip_list[clip_index]
+        
+		clipboard := clip_list[clip_index]
     }
 Return   
-!Numpad2::  ;-->        highlight stuff in quotes
+!Numpad2::     ;-->        highlight stuff in quotes
     {
         global clip_list
-        global clip_index
-        
+		global clip_index
+
         SendInput, {shift down}{home}{shift up}
         Sleep, 15
         SendInput, ^c
         Sleep, 15
         SendInput, {right}
-        
+
         wholeLeft := "" . clipboard . ""
         wlLen := StrLen(wholeLeft) + 1
         leftPos := 0 ;this will be strlen if nothing found by end of string
@@ -330,13 +331,13 @@ Return
                 Break
             }
         }
-        
+
         SendInput, {shift down}{end}{shift up}
         Sleep, 15
         SendInput, ^c
         Sleep, 15
         SendInput, {left}
-        
+
         wholeRight := "" . clipboard . ""
         rightPos := RegExMatch(wholeRight,"[""'']") - 1 ; this will be neg1 if nothing found by end of string
         if (rightPos < 0) {
@@ -348,8 +349,8 @@ Return
             Sleep, 45
             SendInput, {shift down}{right %totLen%}{shift up}  
         }
-        
-        clipboard := clip_list[clip_index]
+
+		clipboard := clip_list[clip_index]
     }
 Return
 ;-----------Code Specific section--------------::;-->	Some things i typed too often in code
@@ -633,14 +634,14 @@ Return
 !Home::
     {
         SendInput, {Shift up}
-            GetKeyState, state, shift
-            ; SendInput, {shift up}
+        GetKeyState, state, shift
+        ; SendInput, {shift up}
         ; Sleep, 45
         ; SendInput, {control up}
         ; Sleep, 45
         ; SendInput, {shift up}
         MsgBox, %state%
-        
+
     }
 Return
 ;-----------Testing Area--------------::;-->	This probably doesn't work yet
@@ -651,7 +652,7 @@ Return
         ; SendInput, {ShiftUp}
         ; stateControl := GetKeyState("Control")
         ; MsgBox, stateShift: %stateShift%, sateControl: %stateControl%
-        
+
         SendInput, onetwothree
         Sleep,45
         SendInput, {Shift Down}{home}{Shift Up}

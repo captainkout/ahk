@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 08-22-19_08-48
+** updated 08-21-19_12-14
 
 #			-->		windows key
 ^			-->		control key
@@ -34,8 +34,8 @@ The :: doesn't mean anything. End of command.
 !+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
 !a::		;-->		archive a timestamped version of your script and cheat sheet
 !i::		;-->		kill gentax
-!Numpad1::  ;-->        highlight word
-!Numpad2::  ;-->        highlight stuff in quotes
+!Numpad1::        ;-->        highlight word
+!Numpad2::     ;-->        highlight stuff in quotes
 
 
 
@@ -64,12 +64,6 @@ The :: doesn't mean anything. End of command.
 :*B0:and::	;-->		return after and
 :*B0:group by::	;-->		return after group by
 :*B0:order by::	;-->		return after order by
-
-
-
-;-----------Up Keys--------------::;-->	If the something is stuck, send all the up inputs
-
-
 
 
 
