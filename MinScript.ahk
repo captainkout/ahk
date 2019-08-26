@@ -326,7 +326,7 @@ Return
             leftFind := SubStr(wholeLeft, subPos)
             leftTest := SubStr(wholeLeft,0)
             leftPos := A_Index - 1
-            if (RegExMatch(leftFind,"[""'']")) {
+            if (RegExMatch(leftFind,"[^a-zA-Z0-9 :#&<>]")) {
                 Break
             }
         }
@@ -338,7 +338,7 @@ Return
         SendInput, {left}
         
         wholeRight := "" . clipboard . ""
-        rightPos := RegExMatch(wholeRight,"[""'']") - 1 ; this will be neg1 if nothing found by end of string
+        rightPos := RegExMatch(wholeRight,"[^a-zA-Z0-9 :#&]<>") - 1 ; this will be neg1 if nothing found by end of string
         if (rightPos < 0) {
             rightPos := StrLen(wholeRight)
         }
