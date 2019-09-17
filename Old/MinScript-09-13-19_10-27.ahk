@@ -1,4 +1,5 @@
 
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -297,16 +298,9 @@ Return
     highlightByPattern("[""'']")
 }
 Return
-!Numpad4::  ;-->        highlight stuff in <>
+!Numpad4::
 {
     highlightByPattern("[\<>]")
-}
-Return
-!/::        ;-->        replace forwardslash(/) with backslash(\)
-{
-    str := "" . clipboard . ""
-    clipboard := RegExReplace(str, "[\\]" , "/")
-    SendInput, ^v
 }
 Return
 ;-----------Code Specific section--------------::;-->	Some things i typed too often in code
@@ -610,8 +604,8 @@ Return
 #+b::		;-->		testing string concat
     {
         clipval := "" . clipboard . ""
-        test := RegExReplace(clipval,"[\\]" , "/")
-        MsgBox, %test%
+        RegExReplace(clipval,"\v" , "", twiceVert)
+        MsgBox, %c%
     }
 highlightByPattern(pattern)   ;--> pattern: string.regex
     {
@@ -655,4 +649,3 @@ highlightByPattern(pattern)   ;--> pattern: string.regex
         
         clipboard := clip_list[clip_index]
     }
-

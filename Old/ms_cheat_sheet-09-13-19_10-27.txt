@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 09-17-19_13-28
+** updated 09-13-19_09-46
 
 #			-->		windows key
 ^			-->		control key
@@ -34,11 +34,8 @@ The :: doesn't mean anything. End of command.
 !+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
 !a::		;-->		archive a timestamped version of your script and cheat sheet
 !i::		;-->		1) Send EntityProject to interactive 2) Paste this 3) Past json into window and run
-!Numpad1::  ;-->        highlight continuous letters
-!Numpad2::  ;-->        highlight property
-!Numpad3::  ;-->        highlight stuff in quotes
-!Numpad4::  ;-->        highlight stuff in <>
-!/::        ;-->        replace forwardslash(/) with backslash(\)
+!Numpad1::  ;-->        highlight continuous word
+!Numpad2::  ;-->        highlight stuff in quotes
 
 
 

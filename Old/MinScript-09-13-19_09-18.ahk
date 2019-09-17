@@ -1,11 +1,9 @@
 
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-
-global gSleepValue = 15
-global gSleepValueLong = 100
 
 !h::		;-->		open cheat sheet
     run C:\Users\%A_UserName% \AppData\Local\Programs\Microsoft VS Code\Code.exe  ms_cheat_sheet.txt
@@ -24,7 +22,7 @@ Return
         if (InStr(Class,"ahk")>0 and Instr(Class,"minscript")) 
         {
             SendInput,{ctrl down}s{ctrl up}		;save it only if youre working on it
-            Sleep, gSleepValue
+            Sleep, 45
         }
         run, %A_ScriptFullPath% 								;refresh script, you'll be prompted with yes/no 
     }
@@ -74,7 +72,7 @@ Return
             clip_list :=[]
         }
         SendInput,^c
-        Sleep, gSleepValuelong
+        sleep, 100
         clip_index :=clip_index + 1
         clip_list[clip_index] := "" . clipboard . ""
     }
@@ -97,7 +95,7 @@ Return
         
         splatArray := StrSplit(RTrim("" . clipboard . ""),"`r`n")
         SendInput,^v
-        Sleep, gSleepValue
+        Sleep, 45
         lastStr := splatArray[splatArray.MaxIndex()]
         xCoord := StrLen(lastStr)
         yCoord := splatArray.MaxIndex()-1
@@ -122,7 +120,7 @@ Return
         
         splatArray := StrSplit(RTrim("" . clipboard . ""),"`r`n")
         SendInput,^v
-        Sleep, gSleepValue
+        Sleep, 45
         lastStr := splatArray[splatArray.MaxIndex()]
         xCoord := StrLen(lastStr)
         yCoord := splatArray.MaxIndex()-1
@@ -183,7 +181,7 @@ Return
         Loop, %max_index%
         {
             SendInput,% clip_list[a_index]
-            Sleep, gSleepValue
+            Sleep, 45
             SendInput, `, {space}
         }
     }
@@ -199,7 +197,7 @@ Return
             SendInput, `'
             SendInput,% clip_list[a_index]
             SendInput, `'`,{space}
-            Sleep, gSleepValue
+            Sleep, 45
         }
     }
 Return
@@ -277,37 +275,100 @@ public void prettyPrint(object o)
 var db = new SafetyMapDbContext("Server = localhost; Database = SafetyMapDev; Trusted_Connection = True; ");
         )
         Clipboard:="" . clipstr . ""
-        Sleep, gSleepValue
+        Sleep, 15
         SendInput, ^v
 
     }
 Return
-!Numpad1::  ;-->        highlight continuous letters
-{
-    highlightByPattern("[^a-zA-Z0-9]")
-}
+!Numpad1::  ;-->        highlight word
+    {
+        SendInput, {shift down}{home}{shift up}
+        Sleep, 15
+        SendInput, ^c
+        Sleep, 15
+        SendInput, {right}
+        
+        wholeLeft := "" . clipboard . ""
+        wlLen := StrLen(wholeLeft) + 1
+        leftPos := 0 ;this will be strlen if nothing found by end of string
+        loop, %wlLen% {
+            subPos := -1*(A_Index -1)
+            leftFind := SubStr(wholeLeft, subPos)
+            leftTest := SubStr(wholeLeft,0)
+            leftPos := A_Index - 1
+            if (RegExMatch(leftFind,"[^a-zA-Z0-9_]")) {
+                Break
+            }
+        }
+        
+        SendInput, {shift down}{end}{shift up}
+        Sleep, 15
+        SendInput, ^c
+        Sleep, 15
+        SendInput, {left}
+        
+        wholeRight := "" . clipboard . ""
+        rightPos := RegExMatch(wholeRight,"[^a-zA-Z0-9_]") - 1 ; this will be neg1 if nothing found by end of string
+        if (rightPos < 0) {
+            rightPos := StrLen(wholeRight)
+        }
+        
+        totLen := leftPos + rightPos
+        SendInput, {left %leftPos%}
+        Sleep, 15
+        SendInput, {shift down}
+            Sleep, 15
+        SendInput, {right %totLen%}
+        Sleep, 15
+        SendInput, {shift up}  
+            
+        clipboard := clip_list[clip_index]
+    }
 Return   
-!Numpad2::  ;-->        highlight property
-{
-    highlightByPattern("[^a-zA-Z0-9_]")
-}
-Return
-!Numpad3::  ;-->        highlight stuff in quotes
-{
-    highlightByPattern("[""'']")
-}
-Return
-!Numpad4::  ;-->        highlight stuff in <>
-{
-    highlightByPattern("[\<>]")
-}
-Return
-!/::        ;-->        replace forwardslash(/) with backslash(\)
-{
-    str := "" . clipboard . ""
-    clipboard := RegExReplace(str, "[\\]" , "/")
-    SendInput, ^v
-}
+!Numpad2::  ;-->        highlight stuff in quotes
+    {
+        global clip_list
+        global clip_index
+        
+        SendInput, {shift down}{home}{shift up}
+        Sleep, 15
+        SendInput, ^c
+        Sleep, 15
+        SendInput, {right}
+        
+        wholeLeft := "" . clipboard . ""
+        wlLen := StrLen(wholeLeft) + 1
+        leftPos := 0 ;this will be strlen if nothing found by end of string
+        loop, %wlLen% {
+            subPos := -1*(A_Index -1)
+            leftFind := SubStr(wholeLeft, subPos)
+            leftTest := SubStr(wholeLeft,0)
+            leftPos := A_Index - 1
+            if (RegExMatch(leftFind,"[^a-zA-Z0-9 :#&<>]")) {
+                Break
+            }
+        }
+        
+        SendInput, {shift down}{end}{shift up}
+        Sleep, 15
+        SendInput, ^c
+        Sleep, 15
+        SendInput, {left}
+        
+        wholeRight := "" . clipboard . ""
+        rightPos := RegExMatch(wholeRight,"[""'']") - 1 ; this will be neg1 if nothing found by end of string
+        if (rightPos < 0) {
+            rightPos := StrLen(wholeRight)
+        }
+        totLen := leftPos + rightPos
+        if (StrLen(wholeLeft) + StrLen(wholeRight)> totLen) {
+            SendInput, {left %leftPos%}
+            Sleep, 45
+            SendInput, {shift down}{right %totLen%}{shift up}  
+        }
+        
+        clipboard := clip_list[clip_index]
+    }
 Return
 ;-----------Code Specific section--------------::;-->	Some things i typed too often in code
 
@@ -347,21 +408,21 @@ Return
 !s::		;-->		write "select * from "
     {
         clipboard :="Select * `rFrom "
-        Sleep, gSleepValue
+        Sleep, 45
         SendInput,^v
     }
 Return
 !+s::		;-->		write "select top 100 * from "
     {
         clipboard :="Select top 100 * `nFrom "
-        Sleep, gSleepValue
+        Sleep, 45
         SendInput, ^v
     }
 Return
 !p::		;-->		Declare all parameters from highlighted query
     {
         SendInput,^c
-        Sleep, gSleepValue
+        Sleep, 45
         str :="" . clipboard . ""
         
         start = 1
@@ -406,7 +467,7 @@ Return
             }
         }
         SendInput,{Left} {Return}
-        Sleep, gSleepValue
+        Sleep, 45
         for key,value in params
         {	
             if Instr(value,"pstr")=1
@@ -432,9 +493,9 @@ Return
                 newvalue = declare @%value% as bit = 0
             
             clipboard := newvalue
-            Sleep, gSleepValue
+            Sleep, 45
             SendInput, ^v {Return}
-            Sleep, gSleepValue
+            Sleep, 45
         }	
         SendInput, {Return}
     }
@@ -446,9 +507,9 @@ Return
         +"where fstrTable like '`%`%'`r" 
         +"--and fstrColumn like '`%`%'`r"
         +"order by fdtmWhen desc"
-        Sleep, gSleepValue
+        Sleep, 45
         SendInput,^v
-        Sleep, gSleepValue
+        Sleep, 45
         SendInput,{Up}{Up}{Right 1}
     }
 Return
@@ -459,9 +520,9 @@ Return
             +"where TABLE_NAME like '`%`%' `r"
         +"--and Column_name like '`%`%'`r"
         +"order by Table_Name asc"
-        Sleep, gSleepValue
+        Sleep, 45
         SendInput,^v
-        Sleep, gSleepValue
+        Sleep, 45
         SendInput,{Up}{Up}{Right 1}
     }
 Return
@@ -510,9 +571,9 @@ Return
             if (InStr(Title,"Sql")>0
                 or InStr(Title, "Script")>0)
             {
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,{shift down}{left 4}{shift up} {Return}
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,from{Space}
             }
         }
@@ -527,9 +588,9 @@ Return
             if (InStr(Title,"Sql")>0
                 or InStr(Title, "Script")>0)
             {
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,{shift down}{left 5}{shift up} {Return}
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,where{Space}
             }
         }
@@ -544,9 +605,9 @@ Return
             if (InStr(Title,"Sql")>0
                 or InStr(Title, "Script")>0)
             {
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,{shift down}{left 3}{shift up} {Return}
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,and{Space}
             }
         }
@@ -561,9 +622,9 @@ Return
             if (InStr(Title,"Sql")>0
                 or InStr(Title, "Script")>0)
             {
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,{shift down}{left 8}{shift up} {Return}
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,group by{Space}
             }
         }
@@ -578,9 +639,9 @@ Return
             if (InStr(Title,"Sql")>0
                 or InStr(Title, "Script")>0)
             {
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,{shift down}{left 8}{shift up} {Return}
-                Sleep, gSleepValue
+                Sleep, 45
                 SendInput,order by{Space}
             }
         }
@@ -592,9 +653,9 @@ Return
         SendInput, {Shift up}
             GetKeyState, state, shift
             ; SendInput, {shift up}
-        ; Sleep, gSleepValue
+        ; Sleep, 45
         ; SendInput, {control up}
-        ; Sleep, gSleepValue
+        ; Sleep, 45
         ; SendInput, {shift up}
         MsgBox, %state%
         
@@ -603,56 +664,22 @@ Return
 ;-----------Testing Area--------------::;-->	This probably doesn't work yet
 #b::	;-->		something
     {
-        Sleep, gSleepValue
-        MsgBox, slept 
+        ; SendInput, {ShiftDown}
+        ; stateShift := GetKeyState("Shift")
+        ; SendInput, {ShiftUp}
+        ; stateControl := GetKeyState("Control")
+        ; MsgBox, stateShift: %stateShift%, sateControl: %stateControl%
+        
+        SendInput, onetwothree
+        Sleep,45
+        SendInput, {Shift Down}{home}{Shift Up}
+        
     }
 Return
 #+b::		;-->		testing string concat
     {
         clipval := "" . clipboard . ""
-        test := RegExReplace(clipval,"[\\]" , "/")
-        MsgBox, %test%
+        RegExReplace(clipval,"\v" , "", twiceVert)
+        MsgBox, %c%
     }
-highlightByPattern(pattern)   ;--> pattern: string.regex
-    {
-      
-        SendInput, {shift down}{home}{shift up}
-        Sleep, gSleepValue
-        SendInput, ^c
-        Sleep, gSleepValue
-        SendInput, {right}
-        
-        wholeLeft := "" . clipboard . ""
-        wlLen := StrLen(wholeLeft) + 1
-        leftPos := 0 ;this will be strlen if nothing found by end of string
-        loop, %wlLen% {
-            subPos := -1*(A_Index -1)
-            leftFind := SubStr(wholeLeft, subPos)
-            leftTest := SubStr(wholeLeft,0)
-            leftPos := A_Index - 1
-            if (RegExMatch(leftFind,pattern)) {
-                Break
-            }
-        }
-        
-        SendInput, {shift down}{end}{shift up}
-        Sleep, gSleepValue
-        SendInput, ^c
-        Sleep, gSleepValue
-        SendInput, {left}
-        
-        wholeRight := "" . clipboard . ""
-        rightPos := RegExMatch(wholeRight,pattern) - 1 ; this will be neg1 if nothing found by end of string
-        if (rightPos < 0) {
-            rightPos := StrLen(wholeRight)
-        }
-        totLen := leftPos + rightPos
-        if (StrLen(wholeLeft) + StrLen(wholeRight)> totLen) {
-            SendInput, {left %leftPos%}
-            Sleep, gSleepValue
-            SendInput, {shift down}{right %totLen%}{shift up}  
-        }
-        
-        clipboard := clip_list[clip_index]
-    }
-
+Return 
