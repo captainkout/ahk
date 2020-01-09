@@ -1,4 +1,5 @@
 
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -318,28 +319,6 @@ Return
     highlightByPattern("[\<>]")
 }
 Return
-!Numpad5::  ;-->        copy all object properties to clipboard
-{
-        clipVal := "" . clipboard . ""
-        arrClipVal := StrSplit("" . clipboard . "", "`r")
-        newStr := ""
-        loop, % arrClipVal.MaxIndex() {
-            
-            test := arrClipVal[A_Index]
-            test := StrReplace(test,"        ","")
-            arrTest := StrSplit(test,A_Space)
-            arrTestMax := arrTest.MaxIndex()
-            
-            if(arrTestMax >2){
-                str := arrTest[3]
-                newStr = %newStr%%str% = null, `n
-                
-            }
-        }
-        clipboard = % newStr
-
-}
-Return
 !/::        ;-->        replace forwardslash(/) with backslash(\)
 {
     SendInput,^
@@ -643,15 +622,8 @@ Return
 ;-----------Testing Area--------------::;-->	This probably doesn't work yet
 #b::	;-->		something
     {
-        MsgBox, "noice"
-        x := [0,1,2,3]
-        xMax := x.MaxIndex()
-        test := "one"
-        loop, % xMax{
-            
-
-        }
-        MsgBox, %test%
+        Sleep, gSleepValue
+        MsgBox, slept 
     }
 Return
 #+b::		;-->		testing string concat
@@ -702,4 +674,3 @@ highlightByPattern(pattern)   ;--> pattern: string.regex
         
         clipboard := clip_list[clip_index]
     }
-

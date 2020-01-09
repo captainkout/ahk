@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 01-09-20_09-28
+** updated 09-19-19_16-07
 
 #			-->		windows key
 ^			-->		control key
@@ -26,12 +26,10 @@ The :: doesn't mean anything. End of command.
 ^+space::	;-->		move to next clipboard, then paste
 ^!space::	;-->		move to to previous clipboard, then paste
 ^+x::		;-->		Wipe out all clipboards and start index over
-!k::		;-->		from sql column,  paste column of non-strings pasted as comma delimited list, put your cursor where you want it
-!+k::		;-->		from sql column, paste column of strings pasted as comma delimited list, put your cursor where you want it
-!j::		;-->		from sql column, paste column of non-strings as comma delimited list, put your cursor where you want it
-!+j::		;-->		from sql column, paste column of strings as comma delimited list, put your cursor where you want it
-#k::		;-->		from sql row, paste row of non-strings as comma delimited list, put your cursor where you want it
-#+k::		;-->		from sql row, paste row of strings as comma delimited list, put your cursor where you want it
+!k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
+!+k::		;-->		column of strings pasted as comma delimited list, put your cursor where you want it
+!j::		;-->		row of non-strings pasted as comma delimited list, put your cursor where you want it
+!+j::		;-->		row of strings pasted as comma delimited list, put your cursor where you want it
 !u::		;-->		paste everything in the global clip list as a comma delimited string
 !+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
 !a::		;-->		archive a timestamped version of your script and cheat sheet
@@ -40,7 +38,6 @@ The :: doesn't mean anything. End of command.
 !Numpad2::  ;-->        highlight property
 !Numpad3::  ;-->        highlight stuff in quotes
 !Numpad4::  ;-->        highlight stuff in <>
-!Numpad5::  ;-->        copy all object properties to clipboard
 !/::        ;-->        replace forwardslash(/) with backslash(\)
 
 

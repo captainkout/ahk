@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 01-09-20_09-28
+** updated 11-12-19_11-14
 
 #			-->		windows key
 ^			-->		control key

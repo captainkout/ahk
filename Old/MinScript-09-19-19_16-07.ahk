@@ -1,4 +1,5 @@
 
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -142,14 +143,14 @@ Return
         clip_index :=0
     }
 Return
-!k::		;-->		from sql column,  paste column of non-strings pasted as comma delimited list, put your cursor where you want it
+!k::		;-->		column of non-strings pasted as comma delimited list, put your cursor where you want it
     {
         str := "" . clipboard . ""
         newstr := "" . StrReplace(str,"`r",",") . ""
         SendInput,% newstr
     }
 Return
-!+k::		;-->		from sql column, paste column of strings pasted as comma delimited list, put your cursor where you want it
+!+k::		;-->		column of strings pasted as comma delimited list, put your cursor where you want it
     {
         str := "" . clipboard . ""
         newstr := "" . StrReplace(str,"`r`n","',`n`'") . ""
@@ -158,32 +159,17 @@ Return
         SendInput,`'
     }
 Return
-!j::		;-->		from sql column, paste column of non-strings as comma delimited list, put your cursor where you want it
+!j::		;-->		row of non-strings pasted as comma delimited list, put your cursor where you want it
     {
         str := "" . clipboard . ""
         newstr := "" . StrReplace(str,"`r`n",",") . ""
         SendInput,% newstr
     }
 Return
-!+j::		;-->		from sql column, paste column of strings as comma delimited list, put your cursor where you want it
+!+j::		;-->		row of strings pasted as comma delimited list, put your cursor where you want it
     {
         str := "" . clipboard . ""
         newstr := "" . StrReplace(str,"`r`n","',`'") . ""
-        SendInput,`'
-        SendInput,% newstr
-        SendInput,`'
-    }
-#k::		;-->		from sql row, paste row of non-strings as comma delimited list, put your cursor where you want it
-    {
-        str := "" . clipboard . ""
-        newstr := "" . StrReplace(str,"`t",",") . ""
-        SendInput,% newstr
-    }
-Return
-#+k::		;-->		from sql row, paste row of strings as comma delimited list, put your cursor where you want it
-    {
-        str := "" . clipboard . ""
-        newstr := "" . StrReplace(str,"`t","',`'") . ""
         SendInput,`'
         SendInput,% newstr
         SendInput,`'
@@ -318,32 +304,8 @@ Return
     highlightByPattern("[\<>]")
 }
 Return
-!Numpad5::  ;-->        copy all object properties to clipboard
-{
-        clipVal := "" . clipboard . ""
-        arrClipVal := StrSplit("" . clipboard . "", "`r")
-        newStr := ""
-        loop, % arrClipVal.MaxIndex() {
-            
-            test := arrClipVal[A_Index]
-            test := StrReplace(test,"        ","")
-            arrTest := StrSplit(test,A_Space)
-            arrTestMax := arrTest.MaxIndex()
-            
-            if(arrTestMax >2){
-                str := arrTest[3]
-                newStr = %newStr%%str% = null, `n
-                
-            }
-        }
-        clipboard = % newStr
-
-}
-Return
 !/::        ;-->        replace forwardslash(/) with backslash(\)
 {
-    SendInput,^
-    Sleep, gSleepValue
     str := "" . clipboard . ""
     clipboard := RegExReplace(str, "[\\]" , "/")
     SendInput, ^v
@@ -643,15 +605,8 @@ Return
 ;-----------Testing Area--------------::;-->	This probably doesn't work yet
 #b::	;-->		something
     {
-        MsgBox, "noice"
-        x := [0,1,2,3]
-        xMax := x.MaxIndex()
-        test := "one"
-        loop, % xMax{
-            
-
-        }
-        MsgBox, %test%
+        Sleep, gSleepValue
+        MsgBox, slept 
     }
 Return
 #+b::		;-->		testing string concat
@@ -664,9 +619,9 @@ highlightByPattern(pattern)   ;--> pattern: string.regex
     {
       
         SendInput, {shift down}{home}{shift up}
-        Sleep, gSleepValueLong
+        Sleep, gSleepValue
         SendInput, ^c
-        Sleep, gSleepValueLong
+        Sleep, gSleepValue
         SendInput, {right}
         
         wholeLeft := "" . clipboard . ""
@@ -683,9 +638,9 @@ highlightByPattern(pattern)   ;--> pattern: string.regex
         }
         
         SendInput, {shift down}{end}{shift up}
-        Sleep, gSleepValueLong
+        Sleep, gSleepValue
         SendInput, ^c
-        Sleep, gSleepValueLong
+        Sleep, gSleepValue
         SendInput, {left}
         
         wholeRight := "" . clipboard . ""
@@ -696,10 +651,9 @@ highlightByPattern(pattern)   ;--> pattern: string.regex
         totLen := leftPos + rightPos
         if (StrLen(wholeLeft) + StrLen(wholeRight)> totLen) {
             SendInput, {left %leftPos%}
-            Sleep, gSleepValueLong
+            Sleep, gSleepValue
             SendInput, {shift down}{right %totLen%}{shift up}  
         }
         
         clipboard := clip_list[clip_index]
     }
-

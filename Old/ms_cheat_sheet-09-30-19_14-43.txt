@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 01-09-20_09-28
+** updated 09-25-19_08-45
 
 #			-->		windows key
 ^			-->		control key
@@ -40,7 +40,6 @@ The :: doesn't mean anything. End of command.
 !Numpad2::  ;-->        highlight property
 !Numpad3::  ;-->        highlight stuff in quotes
 !Numpad4::  ;-->        highlight stuff in <>
-!Numpad5::  ;-->        copy all object properties to clipboard
 !/::        ;-->        replace forwardslash(/) with backslash(\)
 
 
