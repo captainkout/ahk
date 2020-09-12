@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 07-24-20_14-30
+** updated 01-09-20_09-28
 
 #			-->		windows key
 ^			-->		control key
@@ -26,7 +26,7 @@ The :: doesn't mean anything. End of command.
 ^+space::	;-->		move to next clipboard, then paste
 ^!space::	;-->		move to to previous clipboard, then paste
 ^+x::		;-->		Wipe out all clipboards and start index over
-!k::		;-->		from sql column, paste column of non-strings pasted as comma delimited list, put your cursor where you want it
+!k::		;-->		from sql column,  paste column of non-strings pasted as comma delimited list, put your cursor where you want it
 !+k::		;-->		from sql column, paste column of strings pasted as comma delimited list, put your cursor where you want it
 !j::		;-->		from sql column, paste column of non-strings as comma delimited list, put your cursor where you want it
 !+j::		;-->		from sql column, paste column of strings as comma delimited list, put your cursor where you want it
@@ -35,12 +35,13 @@ The :: doesn't mean anything. End of command.
 !u::		;-->		paste everything in the global clip list as a comma delimited string
 !+u::		;-->		paste everything in the global clip list as a comma delimited string of strings
 !a::		;-->		archive a timestamped version of your script and cheat sheet
-!Numpad1:: ;--> highlight continuous letters
-!Numpad2:: ;--> highlight property
-!Numpad3:: ;--> highlight stuff in quotes
-!Numpad4:: ;--> highlight stuff in <>
-!Numpad5:: ;--> copy all object properties to clipboard
-!/:: ;--> replace forwardslash(/) with backslash(\)
+!i::		;-->		1) Send EntityProject to interactive 2) Paste this 3) Past json into window and run
+!Numpad1::  ;-->        highlight continuous letters
+!Numpad2::  ;-->        highlight property
+!Numpad3::  ;-->        highlight stuff in quotes
+!Numpad4::  ;-->        highlight stuff in <>
+!Numpad5::  ;-->        copy all object properties to clipboard
+!/::        ;-->        replace forwardslash(/) with backslash(\)
 
 
 
@@ -48,15 +49,6 @@ The :: doesn't mean anything. End of command.
 
 
 :*:!get::	;--> 		write "{get: set;}"
-:*:!val::	;--> 		write "{get: set;}"
-
-
-
-;-----------Terminal Specific section--------------::;-->	Some things i typed too often in code
-
-
-:*:!auth::	;--> 		vhb-dev-ops auth command
-:*:!eslint::	;--> 		disable eslint
 
 
 
@@ -71,7 +63,6 @@ The :: doesn't mean anything. End of command.
 !p::		;-->		Declare all parameters from highlighted query
 !z::		;-->		zaudit query because the blame tool is too blamin' slow
 !+z::		;-->		information_schema.columns query
-!Numpad9::		;-->		release alt
 :*B0:'::	;-->		close single quote only in sql or gentax sqleditor
 :*:,::		;-->		return after commas
 :*B0:from::	;-->		return after from

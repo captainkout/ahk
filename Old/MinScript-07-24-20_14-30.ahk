@@ -1,4 +1,5 @@
 
+
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn ; Enable warnings to assist with detecting common errors.
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
@@ -370,31 +371,6 @@ Return
     SendInput, /* eslint-disable */
 }	
 Return
-:*:!api::	;--> 		test api/values
-{
-    SendInput, https://localhost:44321/api/values
-}	
-Return
-:*:!runpa::	;--> 		run pashare, don't use darth
-{
-    SendInput, dotnet run --urls=https://localhost:44321/pashare/landing --launch-profile ck
-}	
-Return
-:*:!runpause::	;--> 		run pashare, use darth
-{
-    SendInput, dotnet run --urls=https://localhost:44321/pashare/landing --launch-profile ckUse
-}	
-Return
-:*:!runhi::	;--> 		run hicris, don't use darth
-{
-    SendInput, dotnet run --urls=https://localhost:44330/hicris/landing --launch-profile ck
-}	
-Return
-:*:!runhiuse::	;--> 		run hicris, use darth
-{
-    SendInput, dotnet run --urls=https://localhost:44330/hicris/landing --launch-profile ckuse
-}	
-Return
 
 ;-----------Sql Specific section--------------::;-->	Some Sql specific hotstrings require that you turn on Sql Specific stuff with Alt Q 
 !q::		;-->		Turn on/off sql specific stuff, still should only work in windows with "sql" or "script" in name, AHK only supports global arrays !?!?!
@@ -746,4 +722,3 @@ highlightByPattern(pattern) ;--> pattern: string.regex
     
     clipboard := clip_list[clip_index]
 }
-
