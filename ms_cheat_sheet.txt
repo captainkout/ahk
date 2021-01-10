@@ -1,5 +1,5 @@
 MinScript cheat sheet
-** updated 07-24-20_14-30
+** updated 11-23-20_09-06
 
 #			-->		windows key
 ^			-->		control key
@@ -57,6 +57,11 @@ The :: doesn't mean anything. End of command.
 
 :*:!auth::	;--> 		vhb-dev-ops auth command
 :*:!eslint::	;--> 		disable eslint
+:*:!api::	;--> 		test api/values
+:*:!runpano::	;--> 		run pashare, don't use darth
+:*:!runpayes::	;--> 		run pashare, use darth
+:*:!runhino::	;--> 		run hicris, don't use darth
+:*:!runhiyes::	;--> 		run hicris, use darth
 
 
 
